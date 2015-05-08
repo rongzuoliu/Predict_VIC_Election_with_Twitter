@@ -1,0 +1,106 @@
+{
+   "_id": "5c78f53c49e34341a86c48c9d42a9e16",
+   "_rev": "1-ee114ba88983537faaa05ba7d934f260",
+   "createdAt": "Nov 28, 2010 6:04:49 AM",
+   "id": 8597126451830784,
+   "text": "3rd leg. LAX to Chicago. Almost there (@ LAX Terminal 7) http://4sq.com/c2ahRd",
+   "source": "<a href=\"http://foursquare.com\" rel=\"nofollow\">Foursquare</a>",
+   "isTruncated": false,
+   "inReplyToStatusId": -1,
+   "inReplyToUserId": -1,
+   "isFavorited": false,
+   "isRetweeted": false,
+   "favoriteCount": 0,
+   "geoLocation": {
+       "latitude": 33.94174003,
+       "longitude": -118.39970112
+   },
+   "place": {
+       "name": "Terminal 7",
+       "countryCode": "US",
+       "id": "a72b7c3a8692a8d2",
+       "country": "United States",
+       "placeType": "poi",
+       "url": "https://api.twitter.com/1.1/geo/id/a72b7c3a8692a8d2.json",
+       "fullName": "Terminal 7",
+       "boundingBoxType": "Polygon",
+       "boundingBoxCoordinates": [
+           [
+               {
+                   "latitude": 33.942421,
+                   "longitude": -118.399811
+               },
+               {
+                   "latitude": 33.942421,
+                   "longitude": -118.399811
+               },
+               {
+                   "latitude": 33.942421,
+                   "longitude": -118.399811
+               },
+               {
+                   "latitude": 33.942421,
+                   "longitude": -118.399811
+               }
+           ]
+       ],
+       "containedWithIn": [
+       ]
+   },
+   "retweetCount": 0,
+   "isPossiblySensitive": false,
+   "lang": "en",
+   "contributorsIDs": [
+   ],
+   "userMentionEntities": [
+   ],
+   "urlEntities": [
+   ],
+   "hashtagEntities": [
+   ],
+   "mediaEntities": [
+   ],
+   "extendedMediaEntities": [
+   ],
+   "symbolEntities": [
+   ],
+   "currentUserRetweetId": -1,
+   "user": {
+       "id": 724023,
+       "name": "Willowtech",
+       "screenName": "willowtech",
+       "location": "40.766968,-111.894566",
+       "description": "",
+       "descriptionURLEntities": [
+       ],
+       "isContributorsEnabled": false,
+       "profileImageUrl": "http://pbs.twimg.com/profile_images/3780449307/07b2de46393ef006d64032c56105352b_normal.jpeg",
+       "profileImageUrlHttps": "https://pbs.twimg.com/profile_images/3780449307/07b2de46393ef006d64032c56105352b_normal.jpeg",
+       "isDefaultProfileImage": false,
+       "isProtected": false,
+       "followersCount": 184,
+       "profileBackgroundColor": "1A1B1F",
+       "profileTextColor": "666666",
+       "profileLinkColor": "2FC2EF",
+       "profileSidebarFillColor": "252429",
+       "profileSidebarBorderColor": "FFFFFF",
+       "profileUseBackgroundImage": true,
+       "isDefaultProfile": false,
+       "showAllInlineMedia": false,
+       "friendsCount": 563,
+       "createdAt": "Jan 29, 2007 4:27:08 PM",
+       "favouritesCount": 12,
+       "utcOffset": 36000,
+       "timeZone": "Melbourne",
+       "profileBackgroundImageUrl": "http://abs.twimg.com/images/themes/theme9/bg.gif",
+       "profileBackgroundImageUrlHttps": "https://abs.twimg.com/images/themes/theme9/bg.gif",
+       "profileBackgroundTiled": false,
+       "lang": "en",
+       "statusesCount": 1625,
+       "isGeoEnabled": true,
+       "isVerified": false,
+       "translator": false,
+       "listedCount": 4,
+       "isFollowRequestSent": false
+   }
+}

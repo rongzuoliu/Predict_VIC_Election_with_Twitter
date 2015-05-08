@@ -1,0 +1,1 @@
+{"towards": "Denis Napthine", "text": "@melfyfe Maybe he saw what happened to Brendan Nelson or Denis Napthine!", "userID": 87855671, "longitude": 145.079616, "tweetID": 9326079172939776, "electorate": "Melbourne", "location": "Melbourne", "latitude": -37.8602828, "createdAt": "Nov 30, 2010 6:21:25 AM"}
