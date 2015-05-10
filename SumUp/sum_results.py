@@ -120,7 +120,7 @@ def main():
     print total
     print total_counts
 
-    wf = open('test_count.txt', 'w')
+    wf = open('electData.js', 'w')
     wf.write("var electData = {\n\"type\": \"Counts of Predicted Election Results \",\n\"counts\": [\n")
 
     i = 0
