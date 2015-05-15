@@ -50,17 +50,27 @@ def main():
 
 def main():
 
-    terms = [
-        'DanielAndrewsMP', 'Daniel Andrews', 'Labor',
-        'denisvnapthine', 'Denis Napthine', 'Liberal',
-        'GregMLC', 'Greg Barber', "Greens"
-    ]
+    # terms = [
+    #     'DanielAndrewsMP', 'Daniel Andrews', 'Labor',
+    #     'LiberalAus', 'Denis Napthine', 'Liberal',
+    #     'GregMLC', 'Greg Barber', "Greens",
+    #     'The_Nationals', 'Nationals'
+    # ]
+
+
 
     dbs = ['tweets2010', 'tweets2011', 'tweets2012', 'tweets2013']
 
-    for term in terms:
-        map_reduce("tweets2010", term)
-    map_reduce("test", 'mel')
+    # for term in terms2:
+    #     map_reduce("tweets2014", term)
+
+    map_reduce('tweets2013', 'LiberalAus')
+    map_reduce('tweets2012', 'LiberalAus')
+    map_reduce('tweets2011', 'LiberalAus')
+    map_reduce('tweets2010', 'LiberalAus')
+
+
+
 
 
 if __name__ == '__main__':

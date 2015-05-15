@@ -1,3 +1,5 @@
+from geopy.exc import GeocoderTimedOut, GeocoderServiceError
+
 __author__ = 'rongzuoliu'
 # coding=utf-8
 
@@ -7,12 +9,9 @@ import os
 from geopy.geocoders import Nominatim
 import json
 from shapely.geometry import shape, Point
-from itertools import islice
+from ElectoratesInfo import electoratesInfo
 
-#json format:
-# {UserID: doc.user.id, TweetID: doc.id,
-# GeoLocation: doc.geoLocation, Place: doc.place, Location: doc.user.location,
-# Text: doc.text, CreatedAt: doc.createdAt}
+
 
 # todo: assign value to 'towards' field
 
@@ -27,48 +26,56 @@ def proprocess_tweet(r_path):
     w_path = re.sub('.+raw_', '../ProprocessedTweets/geoed_', r_path)
     wf = open(w_path, 'w')
 
-    latitude = 200.00 # invalid lat
-    longitude = 200.00 # invalid lon
-    location = ''
-    electorate = ''
+
 
     with open(r_path) as file:
         for line in file:
-            # if (line)
-
             js_old = json.loads(line)
+            latitude = 200.00 # invalid lat
+            longitude = 200.00 # invalid lon
+            location = ''
+            electorate = ''
+            location = js_old['location']
 
             # Firstly: get geocode of the tweet
-
             # Way 1: get lat/lon directly from the lat/lon fields of the tweet if they are available
             if ('geoLocation' in js_old):
                 latitude = js_old['geoLocation']['latitude']
                 longitude = js_old['geoLocation']['longitude']
-                belong_to_electorate(latitude, longitude)
+                print latitude
+                print longitude
+                electorate = belong_to_electorate(latitude, longitude)
 
             # Way 2: get lat/lon from the place field of the tweet if it's available
             elif ('place' in js_old):
                 if (js_old['place'].has_key('boundingBoxCoordinates')):
                     latitude = js_old['place']['boundingBoxCoordinates'][0][0].get('latitude')
                     longitude = js_old['place']['boundingBoxCoordinates'][0][0].get('longitude')
+                    electorate = belong_to_electorate(latitude, longitude)
 
             # Way 3: get lat/lon through querying geocode based on the location field of the tweet if they are available
             else:
-                location = js_old['location']
-                (latitude, longitude) = get_geocode_via_location(location)
+                print location
+                for eInfo in electoratesInfo:
+                    # print eInfo[0].lower()
+                    # The situation that the location already contains the electorate information
+                    # print len(re.findall(eInfo[0].lower(), location.lower(), 0))
+                    if (re.findall(eInfo[0].lower(), location.lower(), 0) and not(re.findall("Melbourne".lower(), location.lower(), 0))):
+                        electorate = eInfo[0]
+                        (latitude, longitude) = get_geocode_via_location(electorate)
+                        break
+                # the last situation: general situation
+                if (electorate == None or latitude == 200.00 or longitude == 200.00):
+                    (latitude, longitude) = get_geocode_via_location(location)
+                    electorate = belong_to_electorate(latitude, longitude)
 
 
-            # Secondly: get electorate of the tweet
-            electorate = belong_to_electorate(latitude, longitude)
-
-            print "latitude: %s; longitude: %s; belong to electorate: %s\n" % (latitude, longitude, electorate)
+            print "latitude: %s; longitude: %s;    belong to electorate: %s\n" % (latitude, longitude, electorate)
 
             js_old['latitude'] = latitude
             js_old['longitude'] = longitude
             js_old['electorate'] = electorate
-
             js_old['towards'] = towards
-
             js_new = json.dumps(js_old, ensure_ascii=False)
             wf.write(js_new.encode('utf-8') + '\n')
     wf.close()
@@ -76,8 +83,6 @@ def proprocess_tweet(r_path):
     last_time = e_time - s_time
     print '\nUse time: %s \n' % last_time
     print '\nResult is stored in %s \n' % w_path
-
-
 
 
 
@@ -90,10 +95,12 @@ def get_geocode_via_location(address):
         has_mel = re.findall(r'melbourne', address.lower(), 0)
         has_vic = re.findall(r'victoria', address.lower(), 0)
         has_aus = re.findall(r'australia', address.lower(), 0)
-        addr = re.sub('melbourne','', address.lower()) # if address contain 'melbourne'
-        addr = re.sub('victoria','', addr.lower()) # if address contain 'victorian'
-        addr = re.sub('australia','', addr.lower()) # if address contain 'australia'
-        # print "addr is %s" % addr
+        addr = re.sub('melbourne', '', address.lower()) # if address contain 'melbourne'
+        addr = re.sub('victoria', '', addr.lower()) # if address contain 'victorian'
+        addr = re.sub('vic', '', addr.lower())
+        addr = re.sub('australia', '', addr.lower()) # if address contain 'australia'
+        addr = re.sub('aus', '', addr.lower())
+        print "addr is %s" % addr
 
         # the most common situation:
         # address is a rough address which only contains "melbourne", "victorian" or "australia"
@@ -109,13 +116,19 @@ def get_geocode_via_location(address):
                 address = address + ", VIC, Australia" # make sure the geocode will look for a place in VIC
             # print "address is %s" % address
             geo_locator = Nominatim()
-            geocode = geo_locator.geocode(address, timeout=50)
-            print "Queried geocode result is: %s" % geocode
-            if (geocode):
-                lat = geocode.latitude
-                lon = geocode.longitude
-    return (lat, lon)
+            try:
+                geocode = geo_locator.geocode(address, timeout=40)
+                print "Queried '%s', the geocode result is: %s" % (address, geocode)
+                if (geocode):
+                    lat = geocode.latitude
+                    lon = geocode.longitude
+                else:
+                    "Queried geocode result is: null"
+            except (GeocoderTimedOut) as e:
+                print "Exception: %s" % e
 
+        print "lat is %s; lon is %s" % (lat, lon)
+    return (lat, lon)
 
 
 
@@ -151,12 +164,26 @@ if __name__ == "__main__":
 
     r_path = []
     direct_path = "../RawTweets"
-    for file in os.listdir(direct_path):
-        if file.endswith(".txt"):
-            r_path.append(direct_path + '/' + file)
 
-    for file_path in r_path:
-        proprocess_tweet(file_path)
-    # r_path = "../RawTweets/raw_tweets2010_Daniel Andrews.txt"
-    r_path = "../RawTweets/raw_tweets2010_Greens.txt"
-    proprocess_tweet(r_path)
+
+    for file in os.listdir(direct_path):
+        if re.findall('2013', file, 0) and file.endswith(".txt"):
+            r_path.append(direct_path + '/' + file)
+            print file
+
+
+    # Processing Tweet: Get geoCode and towards party
+    # for file_path in r_path:
+    #     proprocess_tweet(file_path)
+
+
+    file_path = '../RawTweets/raw_tweets2013_Labor(part2).txt'
+    proprocess_tweet(file_path)
+
+
+
+
+
+
+
+
