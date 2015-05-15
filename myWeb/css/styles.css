@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
- html, body, div, span, applet, object, iframe,
+html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -21,9 +21,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-/*@font-face {font-family:"Merriweather Bold"; src:url("fonts/Merriweather-Bold.ttf") format("truetype"); font-weight: normal;font-style: normal;}
-@font-face {font-family:"Merriweather Regular"; src:url("fonts/Merriweather-Regular.ttf") format("truetype"); font-weight: normal;font-style: normal;}
-*/
+
 
 /* apply a natural box layout model to all elements */
 body{
@@ -58,9 +56,6 @@ body{
  }
 
 
-/* BITS */
-
-/* COMMON */
 
 .pez-preloader{
 	width:100%; height: 230px;
@@ -155,11 +150,7 @@ body{
    font-family: "Merriweather Regular";
 }
 
-.pez-deets-dropdown{
-	width:100%;
-	height: 35px;
-}
-
+/*
 .pez-deets-box{
 	height: 40px;
 	-webkit-border-radius: 3px;
@@ -181,14 +172,15 @@ body{
 }
 .pez-deets-box input.middle:focus {
     border: none; outline:none;
-}
+}*/
+
 #pez_number input{
 	text-align: center;
 }
-#pez_mobile_fields{
+/*#pez_mobile_fields{
 	display: none;
 	height: 80px;
-}
+}*/
 
 .pez-small-text{
 	font-size: 10px;
@@ -200,17 +192,8 @@ body{
 	background: url(submit.png) center no-repeat;
 	cursor: pointer;
 }
-/* Mobile fields */
-#pez_mobile_submit_btn{
-	width: 11%;
-	height: 46px;
-	float: right;
-	background-size: contain;
-}
-#pez_mobile_address{
-	width: 87%;
-	margin-right: 0px !important;
-}
+
+
 
 /* LOWER AREA */
 .pez-lower-area{
@@ -226,7 +209,7 @@ body{
 }
 .pez_overlayText{
 	font-family: Merriweather,georgia,serif;
-	width: 280px;
+	width: 200px;
 	height: 85px;
 	margin: auto;
 	top: 129px;
@@ -238,6 +221,7 @@ body{
 	display: block;
 	text-align: center;
 }
+/*
 #pez_ElectorateBox {
 	width:98%;
 	max-width:620px;
@@ -246,7 +230,7 @@ body{
 	color:#333;
 
 }
-
+*/
 #pez_electName{
 	font-family: Merriweather,georgia,serif;
 	font-size: 40px;
@@ -261,13 +245,13 @@ body{
 .pez_grey{
 	color:#999999;
 }
-#pez_ElectorateBox  h4 {
+/*#pez_ElectorateBox  h4 {
 	font-family:Merriweather,georgia, serif;
 	font-size:18px;
 	margin:25px 0 10px 0;
 	border-bottom:2px solid #000;
 }
-
+*/
 #pez_perCentCounted {
 	float:right;
 }
@@ -281,7 +265,7 @@ body{
 	display: block; position: relative;
 	margin-top: 45px !important;
 }
-.pez_candiTable{
+.pez_sum{
 	width:100%; height: auto; display: block;
 	font-size: 13px;
 }
@@ -295,7 +279,7 @@ body{
 	background-color: #e1f0f2;
 }
 .pez_col{
-	width:15%; height: 100%; display: block; float: left; padding:3px 2px 2px 2px;
+	width:12.5%; height: 100%; display: block; float: left; padding:3px 2px 2px 2px;
 }
 .pez_nameCol{
 	width: 55% !important; text-align: left; font-weight: bold;
@@ -332,11 +316,8 @@ body{
 .pez_green{
 	background-color:#1D8601 !important
 }
-.pez_circleholder,.pez_chartholder{
-	width:310px; height: 120px;
-	display: block; position: relative;
-	margin: 13px auto 0 auto; left:0; right:0;
-}
+
+
 #pez_chart_legend{
 	padding-left: 20px;
 }
@@ -345,31 +326,6 @@ body{
 	margin: 0 0 5px 0;
 
 }
-
-/*
-.pez_numCircle {
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	border-radius: 50%;
-	width: 120px;
-	height: 120px;
-	background-color: #727272;
-	border: 7px solid #f2f2f2;
-	color: #fff;
-	text-align: center;
-	font: 24px Arial, sans-serif;
-	vertical-align: middle;
-	line-height:14px !important;
-	display: block; float:left;
-	}
-.pez_leftCircle{
-	padding: 25px 14px;
-	margin-right:70px;
-}
-.pez_rightCircle{
-	padding: 5px 14px;
-}
-*/
 
 .pez_chartBlock{
 	width:120px;
@@ -395,84 +351,7 @@ body{
 	display:inline-block;
 }
 
-.pez_numCircle small{
-	font-size:14px;
-
-}
-#pez_swing, #pez_swingNeeded{
+*/#pez_swing, #pez_swingNeeded{
 	margin:10px 0 0 0;
 	display:block
-}
-@media screen and (max-width: 800px){
-	.pez-left-column{
-		width: 100%;
-	}
-	.pez-right-column{
-		display: none;
-	}
-	#pez_mobile_fields{
-		display: block;
-	}
-	#pez_map_text{
-		display: none;
-	}
-	#pez_mob_text{
-		display: inline;
-	}
-	.pez-top-area{
-		height: 610px;
-	}
-	.pez-top-data-box{
-		margin-top: 25px;
-	}
-}
-
-@media screen and (max-width: 600px) {
-	.pez-heading{
-		font-size: 19px;
-	padding-top: 9px;
-	}
-	.pez-container{
-	 	margin: 0;
-	 	box-shadow: none;
-	 }
-	.styled-select select {
-  		width: 100%;
-	}
- 	.styled-select {
-  	 	width: 100%;
-		background: transparent;
-		margin:0px;
-	}
-	.pez_candiTable{
-		font-size: 12px;
-	}
-	#pez_electName{
-		font-size: 30px;
-	}
-	#pez_status{
-		height: 40px;
-		padding: 10px 5px;
-		font-size: 12px;
-	}
-	#pez_topStats{
-		height: 40px;
-		font-size:12px;
-	}
-	.pez_topStat{
-		font-size: 13px;
-	}
-	.pez-top-data-box{
-		height: auto;
-	}
-	.pez_leftCircle{
-		margin-right: 43px;
-	}
-	.pez-data-overlay {
-    	width: 110%;
-	}
-	.pez_overlayText {
-    	font-family: Merriweather,georgia,serif;
-    	width: 250px;   height: 95px;    top: 70px;
-	}
 }

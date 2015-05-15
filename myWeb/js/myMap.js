@@ -17,6 +17,43 @@ $( document ).ready(function() {
         addGeoToMap(map);
     info.addTo(map);
     legend.addTo(map);
+
+    // element: the information at the bottom
+    $('#pez_lowerOverlay').fadeIn(500); 
+
+    var rowCount = 1;
+
+    // Add the first row of pez_sum
+    $('.pez_sum').html('<div class="pez_row pez_topRow">'
+                            +'<div class="pez_col">Party</div>'
+                            +'<div class="pez_col">Pos</div>'
+                            +'<div class="pez_col">Pos %</div>'
+                            +'<div class="pez_col">Neu</div>'
+                            +'<div class="pez_col">Neu %</div>'
+                            +'<div class="pez_col">Neg</div>'
+                            +'<div class="pez_col">Neg %</div>'
+                            +'<div class="pez_col">Total</div>'
+                        +'</div>');
+  
+    for (i in electDataSum['parties']) {
+        partyName = i
+        dataSum = electDataSum['parties'][i];
+        var rowString = '';
+        rowString += '<div class="pez_row '+partyName+'">' 
+        rowString += '<div class="pez_col">'+partyName+'</div>';
+        rowString += '<div class="pez_col">'+dataSum.total_pos+'</div>';
+        rowString += '<div class="pez_col">'+(dataSum.pos_rate*100).toFixed(2)+'%</div>';
+        rowString += '<div class="pez_col">'+dataSum.total_neu+'</div>';
+        rowString += '<div class="pez_col">'+(dataSum.neu_rate*100).toFixed(2)+'%</div>';
+        rowString += '<div class="pez_col">'+dataSum.total_neg+'</div>';
+        rowString += '<div class="pez_col">'+(dataSum.neg_rate*100).toFixed(2)+'%</div>';
+        rowString += '<div class="pez_col">'+dataSum.total+'</div>';
+        rowString += '</div>';
+        $('.pez_sum').append(rowString);
+    }
+
+    $('pez_sum').show();
+
 });
 
 
