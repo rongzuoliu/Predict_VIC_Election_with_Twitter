@@ -13,8 +13,8 @@ import os
 
 
 # initialisation
-parties = ['Labor', 'Liberal', 'Greens']
-counts = {'pos': 0, 'neu': 0, 'neg': 0, 'none': 0, 'total': 0}
+parties = ['Labor', 'Liberal', 'Greens', 'Nationals']
+counts = {'pos': 0, 'neu': 0, 'neg': 0, 'total': 0}
 party_counts = {}
 for party in parties:
     party_counts[party] = copy.deepcopy(counts)
@@ -33,9 +33,6 @@ with open('../DataSource/electorateFeatures.json') as f:
         elect_counts['parties'] = copy.deepcopy(party_counts)
         total_counts.append({'electorate': copy.deepcopy(elect_counts)})
 
-# total_counts.append({'electorate': {'name': 'None', 'parties': copy.deepcopy(party_counts)}})
-# print total_counts
-
 
 
 ############################function definitions###########################################
@@ -43,18 +40,19 @@ with open('../DataSource/electorateFeatures.json') as f:
 def towards_party(towards):
     search_terms = [
         {"Labor": ['DanielAndrewsMP', 'Daniel Andrews', 'Labor']},
-        {"Liberal": ['denisvnapthine', 'Denis Napthine', 'Liberal']},
+        {"Liberal": ['denisvnapthine', 'Denis Napthine', 'Liberal', 'LiberalAus']},
         {"Greens": ['GregMLC', 'Greg Barber', "Greens"]},
-        {"None": []}
+        {"Nationals": ['The_Nationals', 'Nationals']}
     ]
     to_party = ''
     for line in search_terms:
         for party, terms in line.iteritems():
-            if (towards in terms):
-                to_party = party
+            for term in terms:
+                # print term
+                if re.findall(term.lower(), towards.lower(), 0):
+                    to_party = party
+    # print to_party
     return to_party
-
-
 
 
 def sum_prediction(r_path):
@@ -71,17 +69,15 @@ def sum_prediction(r_path):
 
                 for elect in total_counts:
                     if elect['electorate']['name'] == electorate: # This tweet is belong to this electorate
-                        print elect
+                        # print elect
                         party = towards_party(towards) # This tweet is towards to this party
+                        # print party
                         if (sentiment == 'pos'):
                             elect['electorate']['parties'][party]['pos'] += 1
                         elif (sentiment == 'neu'):
                             elect['electorate']['parties'][party]['neu'] += 1
                         elif (sentiment == 'neg'):
                             elect['electorate']['parties'][party]['neg'] += 1
-                        else:
-                            elect['electorate']['parties'][party]['none'] += 1
-
                         # sum up the total sentiment result for this party in this electorate
                         elect['electorate']['parties'][party]['total'] += 1
                         file_total += 1
@@ -106,35 +102,25 @@ def main():
         # sum up the predicted result of a given labelled file
         sub_total = sum_prediction(r_path)
         total += sub_total
+        print total
+        print total_counts
+        print '\n'
 
-    # # todo: test
-    # r_path = '../LabelledTweets/Labelled_tweets2010_Daniel Andrews.txt'
-    # sub_total = sum_prediction(r_path)
-    # total += sub_total
+
+    # wf = open('electData.js', 'w')
+    # wf.write("var electData = {\n\"type\": \"Counts of Predicted Election Results \",\n\"counts\": [\n")
     #
-    # r_path = '../LabelledTweets/labelled_tweets2010_Denis Napthine.txt'
-    # sub_total = sum_prediction(r_path)
-    # total += sub_total
-
-
-    print total
-    print total_counts
-
-    wf = open('electData.js', 'w')
-    wf.write("var electData = {\n\"type\": \"Counts of Predicted Election Results \",\n\"counts\": [\n")
-
-    i = 0
-    for elect in total_counts:
-        js = json.dumps(elect, ensure_ascii=False)
-        if i < len(total_counts)-1:
-            wf.write(js.encode('utf-8') + ',\n')
-            i += 1
-        else:
-            wf.write(js.encode('utf-8') + '\n')
-
-    wf.write("]};")
-    wf.close()
-
+    # i = 0
+    # for elect in total_counts:
+    #     js = json.dumps(elect, ensure_ascii=False)
+    #     if i < len(total_counts)-1:
+    #         wf.write(js.encode('utf-8') + ',\n')
+    #         i += 1
+    #     else:
+    #         wf.write(js.encode('utf-8') + '\n')
+    #
+    # wf.write("]};")
+    # wf.close()
 
 
 
