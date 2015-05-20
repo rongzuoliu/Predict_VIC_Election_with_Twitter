@@ -134,6 +134,27 @@ def determine_electorate(lat, lon):
     return electorate
 
 
+# todo:
+# todo: tag towards party
+
+
+
+
+#
+# Australia
+# use way4
+# Enter Function
+# Australia
+# []
+# []
+# [u'australia']
+# addr is australia
+# Queried 'Australia, VIC, Australia', the geocode result is: Note Printing Australia, Craigieburn, City of Hume (new), City of Hume, Greater Melbourne, Victoria, 3064, Australia
+# lat is -37.61147875; lon is 144.943321102
+# Belong to Electorate:  Yuroke
+# latitude: -37.61147875; longitude: 144.943321102;    belong to electorate: Yuroke
+
+
 
 def proprocess_tweet(db, view):
     for row in db.view(view):
@@ -142,6 +163,7 @@ def proprocess_tweet(db, view):
         location = doc['user']['location']
         if (location != ''):
             tag_electorate(db, doc)
+
 
 
 
