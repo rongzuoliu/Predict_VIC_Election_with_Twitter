@@ -61,7 +61,6 @@ def tag_electorate(db, doc):
 
 
 
-
 # todo: deal with the situation when location is already a lat and lon
 def geocoding(address):
     lat = 200.00 # Initiate with an invalid value
@@ -110,6 +109,7 @@ def geocoding(address):
     return (lat, lon)
 
 
+
 def determine_electorate(lat, lon):
     electorate = 'null'
     # deal with the most common situation: the location is melbourne
@@ -134,55 +134,52 @@ def determine_electorate(lat, lon):
     return electorate
 
 
-# todo:
-# todo: tag towards party
 
+def tag_textTo(db, doc):
+    parties = ['Labor', 'Liberal', 'Greens', 'Nationals']
+    leaders = ['Daniel Andrews', 'Denis', 'Napthine']
+    to_party = []
+    to_leader = []
+    if ('text' in doc):
+        for party in parties:
+            # print party
+            find_party = re.findall(party, doc['text'], 0)
+            if (find_party):
+                for p in find_party:
+                    if (not (p in to_party)):
+                        to_party.append(p)
+        for leader in leaders:
+            find_leader = re.findall(leader, doc['text'], 0)
+            if (find_leader):
+                for l in find_leader:
+                    if (not (l in to_leader)):
+                        to_leader.append(l)
 
-
-
-#
-# Australia
-# use way4
-# Enter Function
-# Australia
-# []
-# []
-# [u'australia']
-# addr is australia
-# Queried 'Australia, VIC, Australia', the geocode result is: Note Printing Australia, Craigieburn, City of Hume (new), City of Hume, Greater Melbourne, Victoria, 3064, Australia
-# lat is -37.61147875; lon is 144.943321102
-# Belong to Electorate:  Yuroke
-# latitude: -37.61147875; longitude: 144.943321102;    belong to electorate: Yuroke
-
-
-
-def proprocess_tweet(db, view):
-    for row in db.view(view):
-        id = row.id
-        doc = db.get(id)
-        location = doc['user']['location']
-        if (location != ''):
-            tag_electorate(db, doc)
-
+        # todo: to check whether 'textTo' is already exist
+        doc['textTo'] = {'toParty': to_party, 'toLeader': to_leader}
+        print doc['textTo']
+        print '\n'
+        db.save(doc)
 
 
 
 def main():
     server = couchdb.Server('http://127.0.0.1:5984/')
-    db_names = ['liberal_followers']
-    # view_names = ['mapviews/Labor', 'mapviews/Greens', 'mapviews/Liberal']
-    view_names = ['mapviews/Labor']
-    for db_name in db_names:
-        db = server[db_name]
-        for view in view_names:
-            proprocess_tweet(db, view)
+    db = server['vic_election']
+
+    for id in db:
+        doc = db.get(id)
+        tag_textTo(db, doc)
+
+    for id in db:
+        doc = db.get(id)
+        if ('electorate' not in doc):
+            tag_electorate(db, doc)
 
 
 if __name__ == "__main__":
 
     main()
-
-
 
 
 
