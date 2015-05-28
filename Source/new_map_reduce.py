@@ -30,14 +30,20 @@ def create_map_function(term):
 def create_views(server, db_names, terms):
     for db_name in db_names:
         db = server[db_name]
+
+        if '_design/mapviews' in db:
+            pass
+        else:
+            db['_design/mapviews'] = {'views': {}}
+
         doc = db.get('_design/mapviews')
         for term in terms:
             new_view = term
             if new_view not in doc['views']:
                 doc['views'][new_view] = {'map': create_map_function(term)}
-                print 'Created a new view: %s.' % new_view
+                print 'Created a new view: %s in the \'_design/mapviews\' file of the database %s.' % (new_view, db_name)
             else:
-                print 'The view %s already exsit.' % new_view
+                print 'The view %s already exsits in the database %s.' % (new_view, db_name)
         db.save(doc)
 
 
@@ -47,31 +53,38 @@ def combine_views(server, db_names, new_db_name):
     new_db = server[new_db_name]
     for db_name in db_names:
         db = server[db_name]
-        views = db['_design/mapviews']['views'].keys()
-        view_names = []
-        for v in views:
-            view_names.append('mapviews/'+v)
-        print view_names
+        if '_design/mapviews' in db:
+            views = db['_design/mapviews']['views'].keys()
+            view_names = []
+            for v in views:
+                view_names.append('mapviews/'+v)
+            print view_names
 
-        for view in view_names:
-            for row in db.view(view):
-                id = row.id
-                if id not in ids:
-                    ids.append(id)
-                    doc = db.get(id)
-                    doc_new = doc
-                    doc_new['_id'] = str(doc['id'])
-                    try:
-                        new_db.save(doc_new)
-                    except (couchdb.ResourceConflict) as e:
-                        print "Exception: Fail to archive! Duplicated tweets!"
+            for view in view_names:
+                for row in db.view(view):
+                    id = row.id
+                    if id not in ids:
+                        ids.append(id)
+                        doc = db.get(id)
+                        doc_new = doc
+                        doc_new['_id'] = str(doc['id'])
+                        try:
+                            new_db.save(doc_new)
+                        except (couchdb.ResourceConflict) as e:
+                            print "Exception: Fail to archive this tweet! Duplicated tweet!"
+        else:
+            print 'There is no views to combine in the \'_design/mapviews\' file of database %s.' % db_name
+            print 'Please create views in a file named \'_design/mapviews\' in database %s first.\n' % db_name
 
 
 
 def main():
     server = couchdb.Server('http://127.0.0.1:5984/')
-    db_names = ['liberal_followers']
-    terms = ['Labor', 'Liberal', 'Greens', 'Nationals', 'Daniel Andrews', 'Napthine']
+    db_names = ['tweets2010', 'tweets2011', 'tweets2012']
+    terms = ['Labor', 'Daniel Andrews', 'DanielAndrewsMP',
+             'Liberal', 'Napthine',
+             'Greens', 'Greg Barber', 'GregMLC',
+             'Nationals']
 
     create_views(server, db_names, terms)
 
@@ -81,8 +94,8 @@ def main():
         pass
     else:
         server.create(new_db_name)
-    combine_views(server, db_names, new_db_name)
-
+    # combine_views(server, db_names, new_db_name)
+#  'tweets2012', 'tweets2013', 'tweets2014'
 
 if __name__ == '__main__':
     main()
