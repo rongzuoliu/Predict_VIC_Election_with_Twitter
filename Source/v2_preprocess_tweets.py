@@ -10,6 +10,7 @@ from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 
 #import source files
 from ElectoratesInfo import electoratesInfo
+from PolitClassification import PARTIES, LEADERS, PARTYANDLEADER
 
 
 
@@ -136,19 +137,17 @@ def determine_electorate(lat, lon):
 
 
 def tag_textTo(db, doc):
-    parties = ['Labor', 'Liberal', 'Greens', 'Nationals']
-    leaders = ['Daniel Andrews', 'Denis', 'Napthine']
     to_party = []
     to_leader = []
     if ('text' in doc):
-        for party in parties:
+        for party in PARTIES:
             # print party
             find_party = re.findall(party, doc['text'], 0)
             if (find_party):
                 for p in find_party:
                     if (not (p in to_party)):
                         to_party.append(p)
-        for leader in leaders:
+        for leader in LEADERS:
             find_leader = re.findall(leader, doc['text'], 0)
             if (find_leader):
                 for l in find_leader:
@@ -163,18 +162,88 @@ def tag_textTo(db, doc):
 
 
 
+
+# todo: tag towards, combining with toText, Hashtag and mentioned tweeter
+
+def tag_towards(db, doc):
+    # print '\n'
+    hashtags = []
+    inReplyToScreenName = ''
+    towards = ''
+
+    for ht in doc['hashtagEntities']:
+        hashtags.append(ht['text'])
+    if 'inReplyToScreenName' in doc:
+        inReplyToScreenName = doc['inReplyToScreenName']
+
+    # Way 1:
+    # Both hashtags and inReplyToScreenName could contain parties' or leaders' names
+    # Both hashtags and inReplyToScreenName are already recorded into the 'textTo' field
+    # But the difference is there must only one name in 'inReplyToScreenName' and this field means the tweet is used to reply this name
+    # Therefore, the name in 'inReplyToScreenName' is extremely useful to be used in tag party/leader.
+    if inReplyToScreenName:
+        # print 'inReplyToScreenName: %s' % inReplyToScreenName
+        for key, value in PARTYANDLEADER.iteritems():
+            if re.findall(key.lower(), inReplyToScreenName.lower(), 0):
+                # print 'found %s' % inReplyToScreenName
+                towards = key
+                doc['towards'] = towards
+                # print towards
+                return towards
+
+    # Way 2:
+    if 'textTo' in doc:
+        to_leader = doc['textTo']['toLeader']
+        to_party = doc['textTo']['toParty']
+
+        if len(to_leader)==0 and len(to_party)==1:
+            towards = to_party[0]
+        elif len(to_leader)==1 and len(to_party)==0:
+            # print to_leader
+            for key, value in PARTYANDLEADER.iteritems():
+                if to_leader[0] in value:
+                    towards = key
+        elif len(to_leader)==1 and len(to_party)==1:
+            for key, value in PARTYANDLEADER.iteritems():
+                if to_party[0]==key and to_leader[0] in value:
+                    towards = key
+                    # print '\n\n .........................%s....%s' % (to_leader[0], to_party[0])
+        else:
+            if hashtags or inReplyToScreenName:
+                print 'hashtags: %s' % hashtags
+                print 'inReplyToScreenName: %s' % inReplyToScreenName
+            print 'to_party: %s' % to_party
+            print 'to_leader: %s' % to_leader
+            print doc['text']
+            print '\n'
+        # print towards
+        doc['towards'] = towards
+        db.save(doc)
+    else:
+        print '\'textTo\' field is not exist.'
+
+
+
 def main():
     server = couchdb.Server('http://127.0.0.1:5984/')
-    db = server['vic_election']
+    # db = server['vic_election']
+
+    db = server['test_towards']
+    # for id in db:
+    #     doc = db.get(id)
+    #     tag_textTo(db, doc)
+
+    # for id in db:
+    #     doc = db.get(id)
+    #     if ('electorate' not in doc):
+    #         tag_electorate(db, doc)
 
     for id in db:
         doc = db.get(id)
-        tag_textTo(db, doc)
-
-    for id in db:
-        doc = db.get(id)
-        if ('electorate' not in doc):
-            tag_electorate(db, doc)
+        if ('towards' not in doc):
+            tag_towards(db, doc)
+        else:
+            print 'yes'
 
 
 if __name__ == "__main__":
