@@ -1,4 +1,4 @@
-electoratesInfo = [
+ELECTINFO = [
 # electorate name, lat, lon, current party, incumbent
 ["Albert Park","Labor","Mr Martin Peter Foley"],
 ["Altona","Labor","Jill Hennessy"],
