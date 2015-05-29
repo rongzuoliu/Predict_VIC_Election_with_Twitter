@@ -1,6 +1,7 @@
 __author__ = 'rongzuoliu'
 
 import copy
+import json
 
 from ELECTDATACOUNTS import ELECTDATACOUNTS
 from POLITICLASS import PARTIES
@@ -43,16 +44,20 @@ def main():
         parties_rates[party]['neg_rate'] = parties_rates[party]['total_neg'] / float(total)
 
 
-    wf = open('ELECTDATARATES.js', 'w')
-    wf.write('var electDataRates = {\n\"type\": \"Sum of Predicted Election Results and Rates for Every Party\",\n\"total count\": ' + str(total) + ',\n\"parties\": {\n')
+    wf_js = open('TOTALDATARATES.js', 'w')
+    wf_js.write('var totalDataRates = {\n\"type\": \"Sum of Predicted Election Results and Rates for Every Party\",\n\"total count\": ' + str(total) + ',\n\"parties\": [\n')
     i = 0
     for party in parties_rates:
+        js = json.dumps({party: parties_rates[party]}, ensure_ascii=False)
         i += 1
         if (i<len(parties_rates)):
-            wf.write('%s: %s,\n' % (party, parties_rates[party]))
+            wf_js.write(js.encode('utf-8') + ',\n')
+            # wf.write('\"%s\": %s,\n' % (party, parties_rates[party]))
         else:
-            wf.write('%s: %s\n}};' % (party, parties_rates[party]))
-    wf.close()
+            # wf.write('\"%s\": %s\n}};' % (party, parties_rates[party]))
+            wf_js.write(js.encode('utf-8') + '\n]};')
+
+    wf_js.close()
 
 
 
