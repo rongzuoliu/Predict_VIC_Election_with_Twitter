@@ -1,14 +1,12 @@
 __author__ = 'rongzuoliu'
 
 import copy
-import re
 import json
 import couchdb
 
 from ElectoratesInfo import ELECTINFO
 from PolitClassification import PARTIES, LEADERS, PARTYANDLEADER
 
-# todo: separate parites into a file
 
 # initialisation
 counts = {'pos': 0, 'neu': 0, 'neg': 0, 'total': 0}
@@ -31,8 +29,8 @@ print elect_counts
 ############################function definitions###########################################
 
 
-def sum_prediction(doc):
-
+def try_to_count_in(doc):
+    if_count = False
     # todo: change 'sentiment' to 'attitude'
     if 'sentiment' in doc and 'electorate' in doc and 'towards' in doc:
         attitude = doc['sentiment']
@@ -42,46 +40,51 @@ def sum_prediction(doc):
         # print attitude['sentiment']
         # print electorate
         # print towards
-        for elect, senti in elect_counts.iteritems():
-            if elect == electorate: # This tweet is belong to this electorate
-                party = towards # This tweet is towards to this party
-                senti[party][sentiment] += 1
-                senti[party]['total'] += 1
-            else: # This tweet isn't belong to any of these electorates
-                pass # todo: when tweet isn't belong to any electorates
+        if sentiment and towards and electorate:
+            for elect, count in elect_counts.iteritems():
+                if elect == electorate: # This tweet is belong to this electorate
+                    party = towards # This tweet is towards to this party
+                    count[party][sentiment] += 1
+                    count[party]['total'] += 1
+                    if_count = True
+                else: # This tweet isn't belong to any of these electorates
+                    pass # todo: when tweet isn't belong to any electorates
+    return if_count
+
+
+def archive_to_js(total):
+    wf = open('electDataCounts.js', 'w')
+    wf.write('var electData = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n"counts\": [\n"')
+
+    i = 0
+    for elect, count in elect_counts.iteritems():
+        js = json.dumps({elect: count}, ensure_ascii=False)
+        if i < len(elect_counts)-1:
+            wf.write(js.encode('utf-8') + ',\n')
+            i += 1
+        else:
+            wf.write(js.encode('utf-8') + '\n')
+
+    wf.write("]};")
+    wf.close()
+
 
 
 def main():
 
-    total = 0.0 # for division
+    total = 0
     server = couchdb.Server('http://127.0.0.1:5984/')
     # db = server['vic_election']
     db = server['test_towards']
 
     for id in db:
         doc = db.get(id)
-        sum_prediction(doc)
-        total += 1
+        if try_to_count_in(doc):
+            total += 1
     print total
     print elect_counts
 
-    # wf = open('electData.js', 'w')
-    # wf.write("var electData = {\n\"type\": \"Counts of Predicted Election Results \",\n\"counts\": [\n")
-    #
-    # i = 0
-    # for elect in total_counts:
-    #     js = json.dumps(elect, ensure_ascii=False)
-    #     if i < len(total_counts)-1:
-    #         wf.write(js.encode('utf-8') + ',\n')
-    #         i += 1
-    #     else:
-    #         wf.write(js.encode('utf-8') + '\n')
-    #
-    # wf.write("]};")
-    # wf.close()
-
-
-
+    archive_to_js(total)
 
 if __name__ == '__main__':
     main()
