@@ -78,6 +78,7 @@ def geocoding(address):
         print has_vic
         print has_aus
 
+        # todo: re.sub('(2010|2011)', '', createdAt)
         addr = re.sub(r'(melbourne,victoria,australia)', '', address.lower())
         addr = re.sub(r'(VIC,Vic,AUS,Aus)', '', addr) # delete 'VIC', 'Vic', 'Aus', 'AUS' in address
         print "addr is %s" % addr
