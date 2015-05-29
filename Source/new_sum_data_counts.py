@@ -8,10 +8,6 @@ from ELECTINFO import ELECTINFO
 from POLITICLASS import PARTIES
 
 
-# e_data_counts = ElectDataCounts()
-# elect_counts = copy.deepcopy(e_data_counts.elect_counts)
-
-
 elect_counts = {}
 counts = {'pos': 0, 'neu': 0, 'neg': 0, 'total': 0}
 party_counts = {}
