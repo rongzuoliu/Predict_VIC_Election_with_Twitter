@@ -1,10 +1,11 @@
 __author__ = 'rongzuoliu'
 
 import couchdb
+from textblob.en.sentiments import NaiveBayesAnalyzer, PatternAnalyzer
+from textblob import TextBlob
 
 #import source files
 # from TextParser import *
-from SentiAnalyseWithTextBlob import *
 
 
 def sentiAnalysisWithTextBlob(string, classifier):
@@ -28,24 +29,26 @@ def sentiAnalysisWithTextBlob(string, classifier):
             sentiment = 'neu'
         elif (blob.sentiment.polarity < 0):
             sentiment = 'neg'
-    print sentiment
-    print senti_score
+    # print sentiment
+    # print senti_score
     return (sentiment, senti_score)
 
 
 def main():
     server = couchdb.Server('http://127.0.0.1:5984/')
-    db = server['vic_election']
-
+    # db = server['vic_election']
+    db = server['test_towards']
     for id in db:
         doc = db.get(id)
         text = doc['text']
-        if ('sentiment' not in doc):
+        if ('towards' in doc):
             (sentiment, senti_score) = sentiAnalysisWithTextBlob(text, "PatternAnalyzer")
-            doc['sentiment'] = {"sentiment": sentiment, "sentiScore": senti_score}
+            doc['attitude'] = {"sentiment": sentiment, "sentiScore": senti_score}
+            print str(sentiment) + ': '+str(senti_score)+'\n'
             db.save(doc)
         else:
-            pass
+            print 'tweets %s doesn\'t have a \'towards\' field.' % str(id)
+
 
 
 if __name__ == '__main__':
