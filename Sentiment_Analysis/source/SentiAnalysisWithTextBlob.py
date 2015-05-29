@@ -1,6 +1,7 @@
 __author__ = 'rongzuoliu'
 
 from textblob.en.sentiments import NaiveBayesAnalyzer, PatternAnalyzer
+from textblob import Word
 from textblob import TextBlob
 
 def sentiAnalysisWithTextBlob(string, classifier):
@@ -23,10 +24,4 @@ def sentiAnalysisWithTextBlob(string, classifier):
             sentiment = 'neg'
 
     return sentiment
-
-
-
-if __name__ == '__main__':
-    print 'error!!!'
-    print 'The \'SentiAnalyseWithTextBlob.py\' is a function file, which shouldn\'t be called alone!'
 
