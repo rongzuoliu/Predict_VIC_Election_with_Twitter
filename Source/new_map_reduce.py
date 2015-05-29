@@ -88,8 +88,8 @@ def main():
     # create_views(server, db_names, terms)
 
     # combine tweets in different views, delete replication, then store in a new db
-    new_db_name = 'vic_election'
-    # new_db_name = 'test_towards'
+    # new_db_name = 'vic_election'
+    new_db_name = 'test_towards'
     if new_db_name in server:
         pass
     else:
