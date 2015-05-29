@@ -4,29 +4,25 @@ import copy
 import json
 import couchdb
 
-from ElectoratesInfo import ELECTINFO
-from PolitClassification import PARTIES, LEADERS, PARTYANDLEADER
+from ELECTINFO import ELECTINFO
+from POLITICLASS import PARTIES
 
 
-# initialisation
+# e_data_counts = ElectDataCounts()
+# elect_counts = copy.deepcopy(e_data_counts.elect_counts)
+
+
+elect_counts = {}
 counts = {'pos': 0, 'neu': 0, 'neg': 0, 'total': 0}
 party_counts = {}
 for party in PARTIES:
     party_counts[party] = copy.deepcopy(counts)
-elect_counts = {}
-elect_counts['parties'] = copy.deepcopy(party_counts)
-
+    elect_counts['parties'] = copy.deepcopy(party_counts)
 for elect_info in ELECTINFO:
     name = elect_info[0]
     elect_counts[name] = copy.deepcopy(party_counts)
 
 print elect_counts
-# for key, value in elect_counts.iteritems():
-#     print key
-#     print value
-
-
-############################function definitions###########################################
 
 
 def try_to_count_in(doc):
@@ -52,26 +48,30 @@ def try_to_count_in(doc):
     return if_count
 
 
-def archive_to_js(total):
-    wf = open('electDataCounts.js', 'w')
-    wf.write('var electData = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n"counts\": [\n"')
+def archive_to_files(total):
+    wf_js = open('ELECTDATACOUNTS.js', 'w')
+    wf_py = open('ELECTDATACOUNTS.py', 'w')
+    wf_js.write('var electData = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n"counts\": [\n')
+    wf_py.write('ELECTDATACOUNTS = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n"counts\": [\n')
 
     i = 0
     for elect, count in elect_counts.iteritems():
         js = json.dumps({elect: count}, ensure_ascii=False)
         if i < len(elect_counts)-1:
-            wf.write(js.encode('utf-8') + ',\n')
+            wf_js.write(js.encode('utf-8') + ',\n')
+            wf_py.write(js.encode('utf-8') + ',\n')
             i += 1
         else:
-            wf.write(js.encode('utf-8') + '\n')
+            wf_js.write(js.encode('utf-8') + '\n')
+            wf_py.write(js.encode('utf-8') + '\n')
 
-    wf.write("]};")
-    wf.close()
-
+    wf_js.write("]};")
+    wf_py.write("]}")
+    wf_js.close()
+    wf_py.close()
 
 
 def main():
-
     total = 0
     server = couchdb.Server('http://127.0.0.1:5984/')
     # db = server['vic_election']
@@ -84,7 +84,7 @@ def main():
     print total
     print elect_counts
 
-    archive_to_js(total)
+    archive_to_files(total)
 
 if __name__ == '__main__':
     main()

@@ -58,9 +58,8 @@ def combine_views(server, db_names, new_db_name):
             view_names = []
             for v in views:
                 view_names.append('mapviews/'+v)
-            print view_names
-
             for view in view_names:
+                print 'Start to combine view %s from database %s into %s.' % (view, db_name, new_db_name)
                 for row in db.view(view):
                     id = row.id
                     if id not in ids:
@@ -71,7 +70,7 @@ def combine_views(server, db_names, new_db_name):
                         try:
                             new_db.save(doc_new)
                         except (couchdb.ResourceConflict) as e:
-                            print "Exception: Fail to archive this tweet! Duplicated tweet!"
+                            print "Exception: Fail to archive tweet % s in database %s! Duplicated tweet!" % (str(doc_new['_id']), db_name)
         else:
             print 'There is no views to combine in the \'_design/mapviews\' file of database %s.' % db_name
             print 'Please create views in a file named \'_design/mapviews\' in database %s first.\n' % db_name
@@ -80,22 +79,22 @@ def combine_views(server, db_names, new_db_name):
 
 def main():
     server = couchdb.Server('http://127.0.0.1:5984/')
-    db_names = ['tweets2010', 'tweets2011', 'tweets2012']
+    db_names = ['tweets2010', 'tweets2011', 'tweets2012', 'tweets2013', 'tweets2014']
     terms = ['Labor', 'Daniel Andrews', 'DanielAndrewsMP',
              'Liberal', 'Napthine',
              'Greens', 'Greg Barber', 'GregMLC',
              'Nationals']
 
-    create_views(server, db_names, terms)
+    # create_views(server, db_names, terms)
 
     # combine tweets in different views, delete replication, then store in a new db
     new_db_name = 'vic_election'
+    # new_db_name = 'test_towards'
     if new_db_name in server:
         pass
     else:
         server.create(new_db_name)
-    # combine_views(server, db_names, new_db_name)
-#  'tweets2012', 'tweets2013', 'tweets2014'
+    combine_views(server, db_names, new_db_name)
 
 if __name__ == '__main__':
     main()
