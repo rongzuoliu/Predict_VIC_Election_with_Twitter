@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<!--HTML Meta-->
+	<meta charset="utf-8">
+
+	<title>Rongzuo Liu</title>
+
+	<!--Stylez-->
+	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<link href='css/styles.css' rel='stylesheet' />
+	<link href='css/myMap.css' rel='stylesheet' />
+	<link href='css/dashBoard.css' rel='stylesheet' />
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="section">
+			<div class="heading">
+				Twitter Analysis on Victorian State Election (2014)
+			</div>
+		</div>
+		<div class="top-area section">
+			<div class="results resultsSum">
+ 			</div>
+ 			<div class="results resultsByTime">
+	 		</div>	 			
+		</div>
+		<div class="top-area section">			
+			<div class="left-column">
+				<!-- The left space before clicking on the map -->
+				<div class="top-data-box">	
+					<div class="data-overlay" id="topOverlay">
+						<div class="overlayText">
+							<p>Please select the electorate by clicking on the map.</p>
+						</div>
+					</div>
+					<!-- Left placeholder before clicking on the map -->
+					<h3 id="electName">
+					</h3>
+					<div id="status"> 
+						<span id="dec">
+						</span>
+					</div>
+
+					<!-- Pie char placeholder -->
+					<div class="chartBlock">
+					</div>					
+					<div id='dashboard'>
+					</div>
+				</div>
+			</div>
+			<div class="right-column">
+				<div id="container">
+					<div id="map">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Information at the bottom -->
+		<div class="lower-area section">
+			<div class="data-overlay"  id="lowerOverlay">	
+				<div class="sum">
+	 			</div>	 			
+			</div>	
+		</div>
+		<canvas id="word_cloud">
+	 	</canvas>		
+</div>
+
+
+</body>
+	<!--<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>-->
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+	<!-- Libs of Javascript -->
+	<!--<script type="text/javascript" src="libs/queue.v1.min.js"></script>-->
+	<script type="text/javascript" src="libs/d3.v3.min.js"></script>
+	<script type="text/javascript" src="libs/Chart.min.js"></script>
+	<script type="text/javascript" src="libs/wordcloud2.js"></script>
+
+
+	<!-- Data sources -->
+	<script type='text/javascript' src='data/TOTALDATARATES.js'></script>
+	<script type="text/javascript" src='data/electInfo.js'></script>
+	<script type="text/javascript" src="data/electDataCounts.js"></script>
+	<script type="text/javascript" src='data/electResult.js'></script>
+	<script type="text/javascript" src='data/ELECTDATASUMBYTIME.js'></script>
+
+	<!-- Sources files of Javascript -->
+	<script type="text/javascript" src='js/lineChart.js'></script>
+	<script type="text/javascript" src='js/dashBoard.js'></script>
+	<script type="text/javascript" src='js/map.js'></script>
+	<script type="text/javascript" src='js/pieChart.js'></script>
+	<script type="text/javascript" src='js/app.js'></script>
+	<script type="text/javascript" src='js/wordcloud.js'></script>
+</html>

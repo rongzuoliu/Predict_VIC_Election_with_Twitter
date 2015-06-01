@@ -1,7 +1,6 @@
 @charset "utf-8";
-/* CSS Document */
 
-html, body, div, span, applet, object, iframe,
+/*html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -20,73 +19,51 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
-}
+}*/
 
 
-/* apply a natural box layout model to all elements */
 body{
 	margin: 0px;
 }
-.pez-container,.pez-container:before,.pez-container:after, .pez-container *,.pez-container  *:before,.pez-container *:after {
-  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
- }
-.pez-unselectable{
-	-webkit-user-select: none; /* Chrome/Safari */        
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* IE10+ */
-	
-	/* Rules below not implemented in browsers yet */
-	-o-user-select: none;
-	user-select: none; 
- }
 
- .pez-container{
+.container, .container:before, .container:after, .container *, .container *:before, .container *:after {
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
 
+
+.container {
 	margin:10px auto; left:0; right:0;
-
- 	height:auto; min-height: 850px; display: block;
-
- 	width:97%;
- 	box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
- 	padding: 20px;
- 	position: relative;
- 	font-family: "Arial";
- 	
- 	overflow: hidden;
- }
-
-
-
-.pez-preloader{
-	width:100%; height: 230px;
-	background: url('vic-ani-small.gif') no-repeat center #FFF;
-	position: absolute; left:0; z-index: 10;
-	display: none;
+	height:auto; min-height: 850px; display: block;
+	width:97%;
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+	padding: 20px;
+	position: relative;
+	font-family: "Arial";
+	overflow: hidden;
 }
-.pez-middle-float{
-	position: relative; display: block;
-	margin: 0 auto; left: 0; right:0;
-}
-.pez-section{
+
+
+.section{
 	width: 100%; display: block; position: relative;
 	max-width: 940px;
 	margin: 0 auto;
 }
-.pez-top-area{
+
+.top-area{
 	height: 500px;
 	border-bottom: dashed 1px #999999; 
 }
-.pez-left-column, .pez-right-column{
+.left-column, .right-column{
 	width: 49%; height: 100%; display: block;
 	position: relative; float: left;
 }
-.pez-left-column{
+.left-column{
 	float: left;
 }
-.pez-right-column{
+.right-column{
 	float: right;
 }
-.pez-top-data-box{
+.top-data-box{
 	width: 100%; height: 450px; display: block; position: relative;
 	margin-top: 15px;
 }
@@ -99,7 +76,7 @@ body{
 	font-family: "Merriweather Regular";
 	color:#666;
 }
-.pez-heading{
+.heading{
 	width: 100%;
 	height: 55px;
 	background-color: #fff;
@@ -111,13 +88,13 @@ body{
 	margin-bottom: 20px;
 	border-bottom:1px dotted #999;
 }
-#pez_mob_text{
+#mob_text{
 		display: none;
 	}
-.pez-deets-error{
+.deets-error{
 	color:#E22105;
 }
-.pez-field-holder{
+.field-holder{
 	width: 100%;
 	height: 50px;
 	display: block;
@@ -150,44 +127,17 @@ body{
    font-family: "Merriweather Regular";
 }
 
-/*
-.pez-deets-box{
-	height: 40px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #CCCDC5;
-	display: block;
-	float: left;
-	margin-right:20px;
-	padding: 5px;
-}
-.pez-deets-box input{
-	width: 100%; height: 100%;
-	border: none;
-	outline:none;
-	font-size: 14px;
-	color: #949494;
-	font-family: "Merriweather Regular";
-}
-.pez-deets-box input.middle:focus {
-    border: none; outline:none;
-}*/
-
-#pez_number input{
+#number input{
 	text-align: center;
 }
-/*#pez_mobile_fields{
-	display: none;
-	height: 80px;
-}*/
 
-.pez-small-text{
+
+.small-text{
 	font-size: 10px;
 	color: #ACAEA2;
 	line-height: 10px;
 }
-.pez-submit{
+.submit{
 	width: 46px; height: 46px; margin-top:-6px; display:block; float:left;
 	background: url(submit.png) center no-repeat;
 	cursor: pointer;
@@ -196,18 +146,18 @@ body{
 
 
 /* LOWER AREA */
-.pez-lower-area{
+.lower-area{
 	height: auto;
 	padding: 10px 0px;
 }
-.pez-data-overlay{
+.data-overlay{
 	width:100%; height: 100%;
 	position: absolute; top:0; left:0;
 	z-index: 10;
 	background: no-repeat center top #FFF;
 	background-size: contain;
 }
-.pez_overlayText{
+.overlayText{
 	font-family: Merriweather,georgia,serif;
 	width: 200px;
 	height: 85px;
@@ -221,72 +171,66 @@ body{
 	display: block;
 	text-align: center;
 }
-/*
-#pez_ElectorateBox {
-	width:98%;
-	max-width:620px;
-	padding:20px;
-	font-family:arial,sans-serif;
-	color:#333;
 
-}
-*/
-#pez_electName{
+#electName{
 	font-family: Merriweather,georgia,serif;
 	font-size: 40px;
 }
-.pez_topStat{
+.topStat{
 	width: 100%;
 	height: 24px;
 	display: block;
 	font-size: 15px;
 	overflow: hidden;
 }
-.pez_grey{
+.grey{
 	color:#999999;
 }
-/*#pez_ElectorateBox  h4 {
-	font-family:Merriweather,georgia, serif;
-	font-size:18px;
-	margin:25px 0 10px 0;
-	border-bottom:2px solid #000;
+
+#dashboard{
+	display: inline-block;
 }
-*/
-#pez_perCentCounted {
+
+#perCentCounted {
 	float:right;
 }
-#pez_dec {
+#dec {
 	font-weight:bold;
 	text-transform:uppercase;
 }
 
-.pez_tableScroll{
+.tableScroll{
 	width: 100%; height: 250px;
 	display: block; position: relative;
 	margin-top: 45px !important;
 }
-.pez_sum{
+.sum{
 	width:100%; height: auto; display: block;
 	font-size: 13px;
 }
-.pez_row{
+.row{
 	width: 100%; height: 25px; display: block; text-align: center;
 }
-.pez_topRow{
-	background-color: #31b5ff; color:#FFF;
+.topRow{
+	background-color: #31b5ff; color:black;
 }
-.pez_greyRow{
+.bottomRow{
+	background-color: #31b5ff; color:black;
+	font-size: 17px;
+	font-weight: bold;
+}
+.greyRow{
 	background-color: #e1f0f2;
 }
-.pez_col{
+.col{
 	width:12.5%; height: 100%; display: block; float: left; padding:3px 2px 2px 2px;
 }
-.pez_nameCol{
+.nameCol{
 	width: 55% !important; text-align: left; font-weight: bold;
 	padding-left: 10px !important;
 	overflow: hidden;
 }
-#pez_topStats {
+#topStats {
 	width: 50%;
 	border: 1px dotted #999;
 	padding: 4px 12px;
@@ -294,7 +238,7 @@ body{
 	height: 30px;
 	overflow: hidden;
 }
-#pez_status {
+#status {
 	width: 100%;
 	color: #FFF;
 	background-color: #6A5B5B;
@@ -304,54 +248,60 @@ body{
 	padding: 4px;
 	margin: 4px 0px 13px 0px;
 }
-.pez_labor{
+./*labor{
 	background-color:#B30104 !important
 }
-.pez_liberal{
+.liberal{
 	background-color:#0252AD !important
 }
-.pez_indie{
+.indie{
 	background-color:#999 !important
 }
-.pez_green{
+.green{
 	background-color:#1D8601 !important
 }
-
-
-#pez_chart_legend{
+*/
+/*
+#chart_legend{
 	padding-left: 20px;
 }
-.pez_e_legend h5{
+*//*.e_legend h5{
 	font-size: 15px;
 	margin: 0 0 5px 0;
 
-}
+}*/
 
-.pez_chartBlock{
-	width:120px;
-	height: 120px;
-	display: block; float:left;
+.chartBlock{
+	width:430px;
+	height: 430px;
+	display: block; 
 	position: relative;
 }
-.pez_relChart{
-	width: 50px; height: 50px;
+
+.relChart{
+	width: 130px; height: 130px;
+	display: inline-block;
+	border-left: 20px;
 }
-.pez_e_legend{
-	font-weight: bold;
-	font-size: 15px;
-	width: 160px;
-	height: 118px;
-	display: block;
-	float: left;
-	margin-left: 22px;
-	margin-top: 12px;
+
+#predictedPie{
+	margin-left: 40px;
+	margin-right: 40px;
 }
-#pez_e_stats ul {
+
+#resultPie{
+	margin-left: 40px;
+	margin-right: 20px;
+}
+
+
+/*#e_stats ul {
 	list-style-type:square;
 	display:inline-block;
 }
-
-*/#pez_swing, #pez_swingNeeded{
+*/
+/**/#swing, #swingNeeded{
 	margin:10px 0 0 0;
 	display:block
 }
+*/

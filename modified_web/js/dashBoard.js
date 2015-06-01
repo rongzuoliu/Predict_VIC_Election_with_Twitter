@@ -1,13 +1,5 @@
-$(document ).ready(function() {
-
-});
-
-
-
 function dashBoard(id, fData){
-
     var barColor = 'steelblue';
-
     function segColor(c) {
         return {
             Labor:"#D119D1", 
@@ -19,7 +11,6 @@ function dashBoard(id, fData){
     fData.forEach(function(d){
         d.total=d.parties.Labor+d.parties.Liberal+d.parties.Greens;
     });
-
 
     // function to handle pieChart.
     function pieChart(pD){
@@ -69,8 +60,7 @@ function dashBoard(id, fData){
         }    
         return pC;
     }
-    
-    
+       
     // function to handle histogram.
     function histoGram(fD){
         var hG={}, hGDim = {t: 60, r: 0, b: 30, l: 0};
@@ -153,8 +143,7 @@ function dashBoard(id, fData){
         }        
         return hG;
     }
-
-    
+   
     // function to handle legend.
     function legend(lD){
         var leg = {};
