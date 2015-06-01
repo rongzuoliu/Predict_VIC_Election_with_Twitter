@@ -48,7 +48,7 @@ def archive_to_files(total):
     wf_js = open('ELECTDATACOUNTS.js', 'w')
     wf_py = open('ELECTDATACOUNTS.py', 'w')
     wf_js.write('var electDataCounts = {\n\'type\': \'Counts of Predicted Election Results \',\n\'totalCount\': \'' + str(total) +'\',\n\'counts\': {\n')
-    wf_py.write('ELECTDATACOUNTS = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n\"counts\": {\n')
+    wf_py.write('ELECTDATACOUNTS = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n\"counts\": [\n')
 
     i = 0
     for elect, count in elect_counts.iteritems():
@@ -59,7 +59,7 @@ def archive_to_files(total):
             i += 1
         else:
             wf_js.write('\'%s\': %s\n}};' % (elect, count)) # valid format of javascript
-            wf_py.write(js.encode('utf-8') + '\n}}')
+            wf_py.write(js.encode('utf-8') + '\n]}')
     wf_js.close()
     wf_py.close()
 
