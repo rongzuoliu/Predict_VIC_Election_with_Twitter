@@ -63,11 +63,11 @@ def archive_to_files(total):
         # js = json.dumps({year: party}, ensure_ascii=False)
         if i < len(counts_by_dt)-1:
             # wf_js.write(js.encode('utf-8') + ',\n')
-            wf_js.write('\'%s\': %s,\n' % (year, party))
+            wf_js.write('\'%s\': %s,\n' % (year, party)) # valid format of javascript
             i += 1
         else:
             # wf_js.write(js.encode('utf-8') + '\n}};')
-            wf_js.write('\'%s\': %s\n}};' % (year, party))
+            wf_js.write('\'%s\': %s\n}};' % (year, party)) # valid format of javascript
     wf_js.close()
 
 
