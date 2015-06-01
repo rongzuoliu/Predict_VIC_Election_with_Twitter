@@ -23,22 +23,22 @@ print elect_counts
 
 def try_to_count_in(doc):
     if_count = False
-    # todo: change 'sentiment' to 'attitude'
-    if 'sentiment' in doc and 'electorate' in doc and 'towards' in doc:
-        attitude = doc['sentiment']
-        sentiment = doc['sentiment']['sentiment']
+    if 'attitude' in doc and 'electorate' in doc and 'towards' in doc:
+        sentiment = doc['attitude']['sentiment']
         electorate = doc['electorate']
         towards = doc['towards']
-        # print attitude['sentiment']
+        # print sentiment
         # print electorate
         # print towards
         if sentiment and towards and electorate:
+            # print electorate
             for elect, count in elect_counts.iteritems():
                 if elect == electorate: # This tweet is belong to this electorate
                     party = towards # This tweet is towards to this party
                     count[party][sentiment] += 1
                     count[party]['total'] += 1
                     if_count = True
+                    print doc.id
                 else: # This tweet isn't belong to any of these electorates
                     pass # todo: when tweet isn't belong to any electorates
     return if_count
@@ -47,31 +47,30 @@ def try_to_count_in(doc):
 def archive_to_files(total):
     wf_js = open('ELECTDATACOUNTS.js', 'w')
     wf_py = open('ELECTDATACOUNTS.py', 'w')
-    wf_js.write('var electData = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n"counts\": [\n')
-    wf_py.write('ELECTDATACOUNTS = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n"counts\": [\n')
+    wf_js.write('var electDataCounts = {\n\'type\': \'Counts of Predicted Election Results \',\n\'totalCount\': \'' + str(total) +'\',\n\'counts\': {\n')
+    wf_py.write('ELECTDATACOUNTS = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n\"counts\": {\n')
 
     i = 0
     for elect, count in elect_counts.iteritems():
         js = json.dumps({elect: count}, ensure_ascii=False)
         if i < len(elect_counts)-1:
-            wf_js.write(js.encode('utf-8') + ',\n')
+            wf_js.write('\'%s\': %s,\n' % (elect, count)) # valid format of javascript
             wf_py.write(js.encode('utf-8') + ',\n')
             i += 1
         else:
-            wf_js.write(js.encode('utf-8') + '\n')
-            wf_py.write(js.encode('utf-8') + '\n')
-
-    wf_js.write("]};")
-    wf_py.write("]}")
+            wf_js.write('\'%s\': %s\n}};' % (elect, count)) # valid format of javascript
+            wf_py.write(js.encode('utf-8') + '\n}}')
     wf_js.close()
     wf_py.close()
+
+
 
 
 def main():
     total = 0
     server = couchdb.Server('http://127.0.0.1:5984/')
-    # db = server['vic_election']
-    db = server['test_towards']
+    db = server['vic_election']
+    # db = server['test_towards']
 
     for id in db:
         doc = db.get(id)
