@@ -1,10 +1,10 @@
 __author__ = 'rongzuoliu'
 
 import copy
-import json
 import re
 import couchdb
 
+#import source files
 from POLITICLASS import PARTIES
 
 
@@ -16,23 +16,16 @@ for party in PARTIES:
     party_counts[party] = copy.deepcopy(counts)
 for year in years:
     counts_by_dt[year] = copy.deepcopy(party_counts)
-
 print counts_by_dt
-# for year, party_count in counts_by_dt.iteritems():
-#     print year
-#     print party_count
-
 
 def try_to_count_in(doc):
     if_count = False
     created_year = ''
-    # todo: change 'sentiment' to 'attitude'
     if 'attitude' in doc and 'electorate' in doc and 'towards' in doc:
         createdAt = doc['createdAt']
         year_list = re.findall('(2010|2011|2012|2013|2014)', createdAt, 0)
         if year_list:
             created_year = year_list[0]
-
         sentiment = doc['attitude']['sentiment']
         electorate = doc['electorate']
         towards = doc['towards']
@@ -41,7 +34,6 @@ def try_to_count_in(doc):
         if sentiment and towards and electorate:
             for year, count in counts_by_dt.iteritems():
                 if year == created_year:
-                    # print created_year
                     party = towards # This tweet is towards to this party
                     count[party][sentiment] += 1
                     print doc['id']
@@ -54,10 +46,9 @@ def try_to_count_in(doc):
     return if_count
 
 
-def archive_to_files(total):
-    wf_js = open('ELECTDATASUMBYTIME.js', 'w')
-    wf_js.write('var electDataSumByTime = {\n\'type\': \'Counts of Predicted Election Results \',\n\'totalCount\': \'' + str(total) +'\',\n\'timeLines\': {\n')
-
+def save_to_ELECTDATASUMBYTIME(total):
+    wf_js = open('Results/ELECTDATASUMBYTIME.js', 'w')
+    wf_js.write('var electDataSumByTime = {\n\'type\': \'Sum By Time on Every Party \',\n\'totalCount\': \'' + str(total) +'\',\n\'timeLines\': {\n')
     i = 0
     for year, party in counts_by_dt.iteritems():
         # js = json.dumps({year: party}, ensure_ascii=False)
@@ -75,7 +66,6 @@ def main():
     total = 0
     server = couchdb.Server('http://127.0.0.1:5984/')
     db = server['vic_election']
-    # db = server['test_towards']
 
     for id in db:
         doc = db.get(id)
@@ -85,7 +75,7 @@ def main():
     print counts_by_dt
     print total
 
-    archive_to_files(total)
+    save_to_ELECTDATASUMBYTIME(total)
 
 
 if __name__ == '__main__':

@@ -30,12 +30,10 @@ def create_map_function(term):
 def create_views(server, db_names, terms):
     for db_name in db_names:
         db = server[db_name]
-
         if '_design/mapviews' in db:
             pass
         else:
             db['_design/mapviews'] = {'views': {}}
-
         doc = db.get('_design/mapviews')
         for term in terms:
             new_view = term
@@ -45,7 +43,6 @@ def create_views(server, db_names, terms):
             else:
                 print 'The view %s already exsits in the database %s.' % (new_view, db_name)
         db.save(doc)
-
 
 
 def combine_views(server, db_names, new_db_name):
@@ -76,20 +73,17 @@ def combine_views(server, db_names, new_db_name):
             print 'Please create views in a file named \'_design/mapviews\' in database %s first.\n' % db_name
 
 
-
 def main():
     server = couchdb.Server('http://127.0.0.1:5984/')
     db_names = ['tweets2010', 'tweets2011', 'tweets2012', 'tweets2013', 'tweets2014']
     terms = ['Labor', 'Daniel Andrews', 'DanielAndrewsMP',
-             'Liberal', 'Napthine',
+             'Liberal', 'Napthine', 'LPA',
              'Greens', 'Greg Barber', 'GregMLC',
              'Nationals']
-
-    # create_views(server, db_names, terms)
+    create_views(server, db_names, terms)
 
     # combine tweets in different views, delete replication, then store in a new db
-    # new_db_name = 'vic_election'
-    new_db_name = 'test_towards'
+    new_db_name = 'vic_election'
     if new_db_name in server:
         pass
     else:

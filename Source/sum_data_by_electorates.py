@@ -4,6 +4,7 @@ import copy
 import json
 import couchdb
 
+#import source files
 from ELECTINFO import ELECTINFO
 from POLITICLASS import PARTIES
 
@@ -17,7 +18,6 @@ for party in PARTIES:
 for elect_info in ELECTINFO:
     name = elect_info[0]
     elect_counts[name] = copy.deepcopy(party_counts)
-
 print elect_counts
 
 
@@ -27,11 +27,7 @@ def try_to_count_in(doc):
         sentiment = doc['attitude']['sentiment']
         electorate = doc['electorate']
         towards = doc['towards']
-        # print sentiment
-        # print electorate
-        # print towards
         if sentiment and towards and electorate:
-            # print electorate
             for elect, count in elect_counts.iteritems():
                 if elect == electorate: # This tweet is belong to this electorate
                     party = towards # This tweet is towards to this party
@@ -40,16 +36,15 @@ def try_to_count_in(doc):
                     if_count = True
                     print doc.id
                 else: # This tweet isn't belong to any of these electorates
-                    pass # todo: when tweet isn't belong to any electorates
+                    pass
     return if_count
 
 
-def archive_to_files(total):
-    wf_js = open('ELECTDATACOUNTS.js', 'w')
+def save_to_ELECTDATACOUNTS(total):
+    wf_js = open('Results/ELECTDATACOUNTS.js', 'w')
     wf_py = open('ELECTDATACOUNTS.py', 'w')
-    wf_js.write('var electDataCounts = {\n\'type\': \'Counts of Predicted Election Results \',\n\'totalCount\': \'' + str(total) +'\',\n\'counts\': {\n')
-    wf_py.write('ELECTDATACOUNTS = {\n\"type\": \"Counts of Predicted Election Results \",\n\"totalCount\": \"' + str(total) +'\",\n\"counts\": [\n')
-
+    wf_js.write('var electDataCounts = {\n\'type\': \'Sum Based on Electorates \',\n\'totalCount\': \'' + str(total) +'\',\n\'counts\': {\n')
+    wf_py.write('ELECTDATACOUNTS = {\n\"type\": \"Sum Based on Electorates \",\n\"totalCount\": \"' + str(total) +'\",\n\"counts\": [\n')
     i = 0
     for elect, count in elect_counts.iteritems():
         js = json.dumps({elect: count}, ensure_ascii=False)
@@ -64,14 +59,10 @@ def archive_to_files(total):
     wf_py.close()
 
 
-
-
 def main():
     total = 0
     server = couchdb.Server('http://127.0.0.1:5984/')
     db = server['vic_election']
-    # db = server['test_towards']
-
     for id in db:
         doc = db.get(id)
         if try_to_count_in(doc):
@@ -79,7 +70,7 @@ def main():
     print total
     print elect_counts
 
-    archive_to_files(total)
+    save_to_ELECTDATACOUNTS(total)
 
 if __name__ == '__main__':
     main()

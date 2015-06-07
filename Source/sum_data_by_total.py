@@ -1,25 +1,21 @@
 __author__ = 'rongzuoliu'
 
 import copy
-import json
 
+#import source files
 from ELECTDATACOUNTS import ELECTDATACOUNTS
 from POLITICLASS import PARTIES
 
 def main():
-
     one_party_sum = {'total_pos': 0, "total_neg": 0, "total_neu": 0, "total": 0, 'pos_rate': 0, 'neu_rate': 0, 'neg_rate': 0}
     parties_rates = {}
     for party in PARTIES:
         parties_rates[party] = copy.deepcopy(one_party_sum)
     print parties_rates
 
-
     for line in ELECTDATACOUNTS['counts']:
         for elect, counts in line.iteritems():
             party_counts = counts
-        print party_counts
-
         for party, p_count in party_counts.iteritems():
             print party
             print p_count
@@ -43,20 +39,18 @@ def main():
         parties_rates[party]['neu_rate'] = parties_rates[party]['total_neu'] / float(total)
         parties_rates[party]['neg_rate'] = parties_rates[party]['total_neg'] / float(total)
 
-
-    wf_js = open('TOTALDATARATES.js', 'w')
-    wf_js.write('var totalDataRates = {\n\"type\": \"Sum of Predicted Election Results and Rates for Every Party\",\n\"total count\": ' + str(total) + ',\n\"parties\": [\n')
+    wf_js = open('Results/TOTALDATARATES.js', 'w')
+    wf_js.write('var totalDataRates = {\n\'type\': \'Sum of the Total Counts and Rates for Every Party\',\n\'total count\': ' + str(total) + ',\n\'parties\': {\n')
     i = 0
     for party in parties_rates:
-        js = json.dumps({party: parties_rates[party]}, ensure_ascii=False)
         i += 1
+        # js = json.dumps({party: parties_rates[party]}, ensure_ascii=False)
         if (i<len(parties_rates)):
-            wf_js.write(js.encode('utf-8') + ',\n')
-            # wf.write('\"%s\": %s,\n' % (party, parties_rates[party]))
+            wf_js.write('\'%s\': %s,\n' % (party, parties_rates[party])) # valid format of javascript
+            # wf_js.write(js.encode('utf-8') + ',\n')
         else:
-            # wf.write('\"%s\": %s\n}};' % (party, parties_rates[party]))
-            wf_js.write(js.encode('utf-8') + '\n]};')
-
+            wf_js.write('\'%s\': %s\n}};' % (party, parties_rates[party])) # valid format of javascript
+            # wf_js.write(js.encode('utf-8') + '\n}};')
     wf_js.close()
 
 
