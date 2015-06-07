@@ -3,7 +3,7 @@ __author__ = 'rongzuoliu'
 import copy
 
 #import source files
-from ELECTDATACOUNTS import ELECTDATACOUNTS
+from ELECTDATACOUNTS import ELECTDATACOUNTS # need to execute sum_data_by_electorates.py first
 from POLITICLASS import PARTIES
 
 def main():

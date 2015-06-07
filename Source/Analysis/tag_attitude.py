@@ -1,11 +1,10 @@
 __author__ = 'rongzuoliu'
 
 import couchdb
-from textblob.en.sentiments import NaiveBayesAnalyzer, PatternAnalyzer
+from textblob.en.sentiments import NaiveBayesAnalyzer
 from textblob import TextBlob
 
 #import source files
-from TextParser import *
 
 
 def sentiAnalysisWithTextBlob(string, classifier):
