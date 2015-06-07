@@ -1,1 +1,0 @@
-{"towards": "GregMLC", "sentiment": "neu", "text": "Congrats to @GregMLC now the 'official' leader of the Victorian Greens.", "userID": 159460787, "longitude": 144.993060985427, "tweetID": 17547342257328128, "latitude": -37.84358045, "location": "Prahran", "electorate": "Prahran", "createdAt": "Dec 22, 2010 10:49:47 PM"}
