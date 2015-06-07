@@ -29,9 +29,6 @@ class Classifier:
                 self.tweets.append((parser.parser_tweets(line), 'negative'))
                 # self.tweets.append(([line], 'negative'))
 
-        # for t in self.tweets:
-        #     print t
-
         # initiate the training set
         s_time = time.time()
         print 'Initiating training tweets...'
@@ -39,18 +36,10 @@ class Classifier:
         # for word, is_contain in self.training_set:
         #     print '%s       %s\n' %(word, is_contain)
         print 'Use time: %s' % (time.time() - s_time)
-
         s_time = time.time()
         print 'Training the Naive Bayes Classifier...'
         self.classifier = nltk.NaiveBayesClassifier.train(self.training_set)
         print 'Use time: %s' % (time.time() - s_time)
-
-        # print classifier.show_most_informative_features(40)
-        # print classifier._label_probdist
-        # print classifier._label_probdist.prob('positive')
-        # print classifier._label_probdist.prob('negative')
-
-
 
     # get all words in tweets, return a words of list
     def get_words_in_tweets(self):
@@ -76,12 +65,9 @@ class Classifier:
             features['contains(%s)' % word] = (word in a_tweet_words)
         return features
 
-
-
     # initiate training set
     def init_training_set(self):
         self.training_set = nltk.classify.apply_features(self.extract_features, self.tweets)
-
 
     def predict_tweet(self, a_tweet):
         print "Predicting..."
