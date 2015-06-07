@@ -1,14 +1,10 @@
 __author__ = 'rongzuoliu'
 
 import re
-from itertools import islice
 
-
-# todo: stop words: deal with case sensitive
 class TextParser:
     stopWordsFile = 'stop_words.txt'
     stopWords = []
-
     AtUser = []
     HashTag = []
 
@@ -20,7 +16,6 @@ class TextParser:
         TextParser.stopWords.append('AT_USER')
         TextParser.stopWords.append('HASH_TAG')
         TextParser.stopWords.append('URL')
-
         fp = open(TextParser.stopWordsFile, 'r')
         line = fp.readline()
         while line:
@@ -29,13 +24,8 @@ class TextParser:
             line = fp.readline()
         fp.close()
 
-
-    # def __init__(self):
-    #     TextParser.getStopWords() # in case
-
     def parsing(self, text):
         text = self.replaceTags(text)
-        # text = self.delete_repeat_characters(text)
         feature_vector = self.getFeatureVector(text)
         parsed_text = ' '.join(feature_vector)
         return parsed_text
@@ -45,8 +35,8 @@ class TextParser:
     def replaceTags(self, text):
         #Convert to lower case
         text = text.lower()
-        #Convert www.* or https?://* to URL
-        text = re.sub('((www\.[^\s]+)|(https?://[^\s]+))', 'URL', text)
+        #Convert www.* or http?://* to URL
+        text = re.sub('((www\.[^\s]+)|(http?://[^\s]+))', 'URL', text)
         #Convert @username to AT_USER
         self.AtUser = re.findall('@[^\s]+', text)
         text = re.sub('@[^\s]+','AT_USER', text)
@@ -61,13 +51,6 @@ class TextParser:
         return text
 
 
-    # delete the repeated characters in a string. e.g. Baddddddddd! -> Bad!
-    def deleteRepeatCharacters(self, text):
-        #look for 2 or more repetitions of character and replace with the character itself
-        pattern = re.compile(r"(.)\1{1,}", re.DOTALL)
-        return pattern.sub(r"\1\1", text)
-
-
     # parse tweet to a feature vector
     def getFeatureVector(self, text):
         feature_vector = []
@@ -75,8 +58,6 @@ class TextParser:
         words = text.split()
 
         for w in words:
-            #replace two or more with two occurrences
-            w = self.deleteRepeatCharacters(w)
             #strip punctuation
             w = w.strip('\'"?,.')
             #check if the word stats with an alphabet
@@ -88,19 +69,6 @@ class TextParser:
                 feature_vector.append(w.lower())
         return feature_vector
 
-
-
-
-def main():
-
-    TextParser.getStopWords()
-    parser = TextParser()
-
-    test = '76846493;;;;;;;;538067387723948000;;;;;;;;The reckless promises of @DanielAndrewsMP will be covered by cuts to "existing programmes". Which ones Dan? #VicVote http://t.co/kpwdBzNK7D;;;;;;;;Nov 28, 2014 7:30:36 AM;;;;;;;;Prahran, Melbourne.'
-
-    print parser.parsing(test)
-    print parser.AtUser
-    print parser.HashTag
 
 
 if __name__ == '__main__':
