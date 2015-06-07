@@ -1,7 +1,10 @@
 var info = L.control();
 var legend = L.control({position: 'bottomright'});
 
-
+var ALP = 0;
+var LP = 0;
+var GRN = 0;
+var NP = 0;
 function showMap() {
     // Set up an original map
     L.mapbox.accessToken = 'pk.eyJ1Ijoicm9uZ3p1b2wiLCJhIjoiM09xSU1TZyJ9.yB_yO1xg4PzZ2h7LrY53Zw';
@@ -17,7 +20,10 @@ function showMap() {
     
     info.addTo(map);
     legend.addTo(map);
-
+    // console.log("ALP: " + ALP);
+    // console.log("LP: " + LP);
+    // console.log("GRN: " + GRN);
+    // console.log("NP: " + NP);
 }
 
 function addGeoToMap(map) {
@@ -68,8 +74,6 @@ function resetHighlight(e) {
 function selectedElectorate(e) {
     var layer = e.target;
     var i = layer.feature.properties.Name;
-    console.log(layer.feature.properties.Name);
-    console.log(layer.feature.properties.newMargins);
     passElect(layer.feature.properties.Name);
 }
 
@@ -100,10 +104,8 @@ function getColor(party) {
     return color
 }
 
-
 function getElect(name) {
     var party = '';
-    // console.log(name);
     for (var elect in electDataCounts.counts) {
         // console.log(i);
         if (elect == name) {
@@ -111,20 +113,25 @@ function getElect(name) {
             party = getParty(electDataCounts.counts[elect]);
         }
     }
+    if (party == "Labor") {ALP+=1;}
+    else if (party == "Liberal") {LP+=1;}
+    else if (party == "Greens") {GRN+=1;}
+    else if (party == "Nationals") {NP+=1;}
     return party;
 }
 
-
-// get the party's name that most tweets talks about. That is, the party has the maximum 'total' 
 function getParty(parties) {  
     var party = '';
+    var electTotal = 0;
     var max = 0.0;
-    console.log(parties);
+    for (var i in parties) {
+        electTotal += parties[i].total;
+    }
     for (var i in parties) {
         var partyName = i;
-        var partyTotal = parties[i].total;
-        if (partyTotal >= max) {
-            max = partyTotal;
+        var partyPosRate = parties[i].pos/electTotal;
+        if (partyPosRate >= max) {
+            max = partyPosRate;
             party = partyName;
         }
     }

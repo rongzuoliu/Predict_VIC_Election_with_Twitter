@@ -1,7 +1,6 @@
 $( document ).ready(function() {
     showResults();
     showTimeLine();
-    $('#dashboard').hide();
     showMap();
 });
 
@@ -19,7 +18,6 @@ function showResults() {
                             +'<div class="col">Neg %</div>'
                             +'<div class="col">Total</div>'
                         +'</div>');
-
     for (p in totalDataRates['parties']) {
         partyName = p
         dataSum = totalDataRates['parties'][p];
@@ -36,17 +34,8 @@ function showResults() {
         rowString += '</div>';
         $('.resultsSum').append(rowString);
     }
-    rowString = '<div class="row bottomRow">Conclusion: Labor win with the highest positive rate (21.05%).</div>'
-                            // +'<div class="col">Pos %</div>'
-                            // +'<div class="col">Neu</div>'
-                            // +'<div class="col">Neu %</div>'
-                            // +'<div class="col">Neg</div>'
-                            // +'<div class="col">Neg %</div>'
-                            // +'<div class="col">Total</div>'
-                            +'</div>';
     $('#resultSum').append(rowString);
     $('#resultsSum').show();
-
 }
 
 

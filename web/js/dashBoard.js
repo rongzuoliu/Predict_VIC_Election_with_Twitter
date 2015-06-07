@@ -4,12 +4,13 @@ function dashBoard(id, fData){
         return {
             Labor:"#D119D1", 
             Liberal:"#1975D1",
-            Greens:"#2EB82E"}[c]; 
+            Greens:"#2EB82E",
+            Nationals:'#FFFF4D'}[c]; 
     }
     
     // compute total for each senti.
     fData.forEach(function(d){
-        d.total=d.parties.Labor+d.parties.Liberal+d.parties.Greens;
+        d.total=d.parties.Labor+d.parties.Liberal+d.parties.Greens+d.parties.Nationals;
     });
 
     // function to handle pieChart.
@@ -190,7 +191,7 @@ function dashBoard(id, fData){
     }
     
     // calculate total frequency by segment for all senti.
-    var tF = ['Labor','Liberal','Greens'].map(function(d){ 
+    var tF = ['Labor','Liberal','Greens','Nationals'].map(function(d){ 
         return {
             type:d, 
             parties: d3.sum(fData.map(function(t){ 

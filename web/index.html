@@ -3,13 +3,8 @@
 <html>
 <head>
 	<meta charset="utf-8">
-
-	<!--HTML Meta-->
 	<meta charset="utf-8">
-
 	<title>Rongzuo Liu</title>
-
-	<!--Stylez-->
 	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 	<link href='css/styles.css' rel='stylesheet' />
@@ -22,14 +17,16 @@
 	<div class="container">
 		<div class="section">
 			<div class="heading">
-				Twitter Analysis on Victorian State Election (2014)
+				Twitter Analysis on Victorian State Elections (2014)
 			</div>
 		</div>
 		<div class="top-area section">
 			<div class="results resultsSum">
  			</div>
  			<div class="results resultsByTime">
-	 		</div>	 			
+	 		</div>
+	 		<div class="line-titles">
+			</div>	 			
 		</div>
 		<div class="top-area section">			
 			<div class="left-column">
@@ -47,7 +44,6 @@
 						<span id="dec">
 						</span>
 					</div>
-
 					<!-- Pie char placeholder -->
 					<div class="chartBlock">
 					</div>					
@@ -62,15 +58,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- Information at the bottom -->
-		<div class="lower-area section">
-			<div class="data-overlay"  id="lowerOverlay">	
-				<div class="sum">
-	 			</div>	 			
-			</div>	
-		</div>
-		<canvas id="word_cloud">
-	 	</canvas>		
 </div>
 
 
@@ -84,8 +71,6 @@
 	<!--<script type="text/javascript" src="libs/queue.v1.min.js"></script>-->
 	<script type="text/javascript" src="libs/d3.v3.min.js"></script>
 	<script type="text/javascript" src="libs/Chart.min.js"></script>
-	<script type="text/javascript" src="libs/wordcloud2.js"></script>
-
 
 	<!-- Data sources -->
 	<script type='text/javascript' src='data/TOTALDATARATES.js'></script>
@@ -100,5 +85,4 @@
 	<script type="text/javascript" src='js/map.js'></script>
 	<script type="text/javascript" src='js/pieChart.js'></script>
 	<script type="text/javascript" src='js/app.js'></script>
-	<script type="text/javascript" src='js/wordcloud.js'></script>
 </html>

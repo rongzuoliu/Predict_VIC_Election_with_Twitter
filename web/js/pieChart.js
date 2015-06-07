@@ -1,17 +1,13 @@
-
 function passElect(electName){
-	console.log(electName);
 	// element: the information at the bottom
 	$('#lowerOverlay').fadeIn(500); 
 	// element: the space holder of left before clicking on the map
 	$('#topOverlay').hide();
 	// showPie(get_election_index(elect));
-	showPie(electName); // For test: set up the name of an electorate
-	
+	showPie(electName); 	
 }
 
 function showPie(electName){
-	console.log("get in showPie");
 	$("#electName").html(electName);
 	$("#status").html('Predicted Results VS Actual Results');
 	// Set the main pie chart to the html content
@@ -89,22 +85,17 @@ function getResultPieData(electName) {
 			parties = electResults[i].candidate;
 			for (p in parties) {
 				partyName = parties[p].candParty;
-				console.log(partyName);
 				if (partyName == "ALP") {
 					pieDataLabor = parties[p].candCount;
-					console.log(pieDataLabor);
 				}
 				else if (partyName == "LP"){
 					pieDataLiberal = parties[p].candCount;
-					console.log(pieDataLiberal);
 				}
 				else if (partyName == "GRN"){
 					pieDataGreens = parties[p].candCount;
-					console.log(pieDataGreens);
 				}
 				else if (partyName == "NP"){
 					pieDataNationals = parties[p].candCount;
-					console.log(pieDataNationals);
 				}
 			}
 		}
@@ -133,7 +124,7 @@ function getResultPieData(electName) {
 			label: "Nationals"
 		}];
 		return chartData;
-		console.log(chartData);
+		// console.log(chartData);
 	}
 	else {
 		var chartData = [{
@@ -174,19 +165,19 @@ function getDashBoardData(electName) {
 	var LaborData = getPartyData(electName, 'Labor');
 	var LiberalData = getPartyData(electName, 'Liberal');
 	var GreensData = getPartyData(electName, 'Greens');
+	var NationalsData = getPartyData(electName, 'Nationals');
 	sentiData.push({"senti": 'Pos', 
 					"parties": 
-						{"Labor": LaborData['pos'], "Liberal": LiberalData['pos'], "Greens": GreensData['pos']}
+						{"Labor": LaborData['pos'], "Liberal": LiberalData['pos'], "Greens": GreensData['pos'], "Nationals": NationalsData['pos']}
 				});
 	sentiData.push({"senti": 'Neg', 
 				"parties": 
-					{"Labor": LaborData['neg'], "Liberal": LiberalData['neg'], "Greens": GreensData['neg']}
+					{"Labor": LaborData['neg'], "Liberal": LiberalData['neg'], "Greens": GreensData['neg'], "Nationals": NationalsData['neg']}
 				});
 	sentiData.push({"senti": 'Neu', 
 			"parties": 
-				{"Labor": LaborData['neu'], "Liberal": LiberalData['neu'], "Greens": GreensData['neu']}
+				{"Labor": LaborData['neu'], "Liberal": LiberalData['neu'], "Greens": GreensData['neu'], "Nationals": NationalsData['neu']}
 				});
-	console.log(sentiData);
 	return sentiData
 }
 

@@ -1,7 +1,6 @@
-function getPartyTimeLine(party) {
+function getPartyTimeLine(party, senti) {
     timeLines = electDataSumByTime["timeLines"];
     tl = [];
-
     total10 = 0;
     for (p in timeLines["2010"]) {
         total10 += timeLines["2010"][p]["total"];
@@ -21,37 +20,29 @@ function getPartyTimeLine(party) {
     total14 = 0;
     for (p in timeLines["2014"]) {
         total14 += timeLines["2014"][p]["total"];
+    }    
+    if (senti == 'pos') {
+        tl.push(timeLines["2010"][party]["pos"]/total10);
+        tl.push(timeLines["2011"][party]["pos"]/total11);
+        tl.push(timeLines["2012"][party]["pos"]/total12);
+        tl.push(timeLines["2013"][party]["pos"]/total13);   
+        tl.push(timeLines["2014"][party]["pos"]/total14); 
     }
-    
-    // tl.push(timeLines["2010"][party]["pos"]/total10);
-    // tl.push(timeLines["2011"][party]["pos"]/total11);
-    // tl.push(timeLines["2012"][party]["pos"]/total12);
-    // tl.push(timeLines["2013"][party]["pos"]/total13);   
-    // tl.push(timeLines["2014"][party]["pos"]/total14); 
-
-    // tl.push(timeLines["2010"][party]["neg"]/total10);
-    // tl.push(timeLines["2011"][party]["neg"]/total11);
-    // tl.push(timeLines["2012"][party]["neg"]/total12);
-    // tl.push(timeLines["2013"][party]["neg"]/total13);   
-    // tl.push(timeLines["2014"][party]["neg"]/total14); 
-
-    tl.push(timeLines["2010"][party]["neg"]/timeLines["2010"][party]["total"]);
-    tl.push(timeLines["2011"][party]["neg"]/timeLines["2011"][party]["total"]);
-    tl.push(timeLines["2012"][party]["neg"]/timeLines["2012"][party]["total"]);
-    tl.push(timeLines["2013"][party]["neg"]/timeLines["2013"][party]["total"]);   
-    tl.push(timeLines["2014"][party]["neg"]/timeLines["2014"][party]["total"]); 
-    console.log(tl);
+    if (senti == 'total') {
+        tl.push(timeLines["2010"][party]["total"]);
+        tl.push(timeLines["2011"][party]["total"]);
+        tl.push(timeLines["2012"][party]["total"]);
+        tl.push(timeLines["2013"][party]["total"]);   
+        tl.push(timeLines["2014"][party]["total"]);         
+    }
     return tl;
 }
 
-function getLineChartData() {
-    // throw('zoey');
-
-    var dataLabor = getPartyTimeLine("Labor");
-    var dataLiberal = getPartyTimeLine("Liberal");
-    var dataGreens = getPartyTimeLine("Greens");
-    var dataNationals = getPartyTimeLine("Nationals");
-
+function getLineChartData(senti) {
+    var dataLabor = getPartyTimeLine("Labor", senti);
+    var dataLiberal = getPartyTimeLine("Liberal", senti);
+    var dataGreens = getPartyTimeLine("Greens", senti);
+    var dataNationals = getPartyTimeLine("Nationals", senti);
     var lineChartData = {
         labels: ["2011", "2012", "2013", "2014"],
         datasets: [
@@ -94,7 +85,6 @@ function getLineChartData() {
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(255,255,77,1)",
                 data: dataNationals            },
-
         ]
     };
     return lineChartData;
@@ -102,9 +92,12 @@ function getLineChartData() {
 
 
 function showTimeLine() {
-	$('.resultsByTime').html('<canvas class="lineChart" id="timeLine" width="420" height="320"></canvas>');
-    var lineChart = document.getElementById('timeLine').getContext('2d');
-    window.lineChart = new Chart(lineChart).Line(getLineChartData());
+	$('.resultsByTime').html('<canvas class="lineChartPos" id="timeLinePos" width="420" height="320"></canvas><canvas class="lineChartTotal" id="timeLineTotal" width="420" height="320"></canvas>');
+    $('.line-titles').html('<p id="left-line-title">Change of the Positive Rates for Each Party</p><p id="right-line-title">Change of the Tweets\' Amount for Each Party</p>');
+    var lineChartPos = document.getElementById('timeLinePos').getContext('2d');
+    var lineChartTotal = document.getElementById('timeLineTotal').getContext('2d');
+    window.lineChartPos = new Chart(lineChartPos).Line(getLineChartData('pos'));
+    window.lineChartTotal = new Chart(lineChartTotal).Line(getLineChartData('total'));
     $('.resultsByTime').show();
-
+    $('.line-titles').show();
 }

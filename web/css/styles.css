@@ -1,27 +1,5 @@
 @charset "utf-8";
 
-/*html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}*/
-
-
 body{
 	margin: 0px;
 }
@@ -29,7 +7,6 @@ body{
 .container, .container:before, .container:after, .container *, .container *:before, .container *:after {
 	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
-
 
 .container {
 	margin:10px auto; left:0; right:0;
@@ -42,7 +19,6 @@ body{
 	overflow: hidden;
 }
 
-
 .section{
 	width: 100%; display: block; position: relative;
 	max-width: 940px;
@@ -50,7 +26,7 @@ body{
 }
 
 .top-area{
-	height: 500px;
+	height: 600px;
 	border-bottom: dashed 1px #999999; 
 }
 .left-column, .right-column{
@@ -68,6 +44,21 @@ body{
 	margin-top: 15px;
 }
 
+.lineChartPos, .lineChartTotal{
+	margin-top: 40px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 5px;
+}
+
+#left-line-title, #right-line-title{
+	padding-left: 50px;
+	padding-right: 90px;
+	height: 10%; 
+	display: inline-block;
+	position: relative; 
+}
+
 .top-text{
 	width: 100%;
 	font-size: 16px;
@@ -76,6 +67,7 @@ body{
 	font-family: "Merriweather Regular";
 	color:#666;
 }
+
 .heading{
 	width: 100%;
 	height: 55px;
@@ -88,68 +80,12 @@ body{
 	margin-bottom: 20px;
 	border-bottom:1px dotted #999;
 }
-#mob_text{
-		display: none;
-	}
-.deets-error{
-	color:#E22105;
-}
-.field-holder{
-	width: 100%;
-	height: 50px;
-	display: block;
-	position: relative;
-}
- .styled-select {
-   width: 100%;
-	height: 34px;
-	overflow: hidden;
-	background: url('drop-btn.gif') no-repeat scroll right center #FFF;
-	border-radius: 3px;
-	border: 1px solid #CCCDC5;
-	display: block;
-	cursor: pointer;
-	margin: 0px auto 10px auto;
-	left: 0px;
-	right: 0px;
-}
-.styled-select select {
-   background: transparent;
-   width: 106%;
-   padding: 5px;
-   font-size: 16px;
-   line-height: 1;
-   border: 0;
-   border-radius: 0;
-   height: 34px;
-   -webkit-appearance: none;
-   cursor: pointer;
-   font-family: "Merriweather Regular";
-}
 
-#number input{
-	text-align: center;
-}
-
-
-.small-text{
-	font-size: 10px;
-	color: #ACAEA2;
-	line-height: 10px;
-}
-.submit{
-	width: 46px; height: 46px; margin-top:-6px; display:block; float:left;
-	background: url(submit.png) center no-repeat;
-	cursor: pointer;
-}
-
-
-
-/* LOWER AREA */
 .lower-area{
 	height: auto;
 	padding: 10px 0px;
 }
+
 .data-overlay{
 	width:100%; height: 100%;
 	position: absolute; top:0; left:0;
@@ -157,6 +93,7 @@ body{
 	background: no-repeat center top #FFF;
 	background-size: contain;
 }
+
 .overlayText{
 	font-family: Merriweather,georgia,serif;
 	width: 200px;
@@ -176,38 +113,16 @@ body{
 	font-family: Merriweather,georgia,serif;
 	font-size: 40px;
 }
-.topStat{
-	width: 100%;
-	height: 24px;
-	display: block;
-	font-size: 15px;
-	overflow: hidden;
-}
-.grey{
-	color:#999999;
-}
 
 #dashboard{
 	display: inline-block;
 }
 
-#perCentCounted {
-	float:right;
-}
 #dec {
 	font-weight:bold;
 	text-transform:uppercase;
 }
 
-.tableScroll{
-	width: 100%; height: 250px;
-	display: block; position: relative;
-	margin-top: 45px !important;
-}
-.sum{
-	width:100%; height: auto; display: block;
-	font-size: 13px;
-}
 .row{
 	width: 100%; height: 25px; display: block; text-align: center;
 }
@@ -219,9 +134,6 @@ body{
 	font-size: 17px;
 	font-weight: bold;
 }
-.greyRow{
-	background-color: #e1f0f2;
-}
 .col{
 	width:12.5%; height: 100%; display: block; float: left; padding:3px 2px 2px 2px;
 }
@@ -230,14 +142,7 @@ body{
 	padding-left: 10px !important;
 	overflow: hidden;
 }
-#topStats {
-	width: 50%;
-	border: 1px dotted #999;
-	padding: 4px 12px;
-	float: left;
-	height: 30px;
-	overflow: hidden;
-}
+
 #status {
 	width: 100%;
 	color: #FFF;
@@ -248,28 +153,6 @@ body{
 	padding: 4px;
 	margin: 4px 0px 13px 0px;
 }
-./*labor{
-	background-color:#B30104 !important
-}
-.liberal{
-	background-color:#0252AD !important
-}
-.indie{
-	background-color:#999 !important
-}
-.green{
-	background-color:#1D8601 !important
-}
-*/
-/*
-#chart_legend{
-	padding-left: 20px;
-}
-*//*.e_legend h5{
-	font-size: 15px;
-	margin: 0 0 5px 0;
-
-}*/
 
 .chartBlock{
 	width:430px;
@@ -277,31 +160,16 @@ body{
 	display: block; 
 	position: relative;
 }
-
 .relChart{
 	width: 130px; height: 130px;
 	display: inline-block;
 	border-left: 20px;
 }
-
 #predictedPie{
 	margin-left: 40px;
 	margin-right: 40px;
 }
-
 #resultPie{
 	margin-left: 40px;
 	margin-right: 20px;
 }
-
-
-/*#e_stats ul {
-	list-style-type:square;
-	display:inline-block;
-}
-*/
-/**/#swing, #swingNeeded{
-	margin:10px 0 0 0;
-	display:block
-}
-*/
