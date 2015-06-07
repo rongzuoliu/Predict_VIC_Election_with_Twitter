@@ -1,5 +1,7 @@
 __author__ = 'rongzuoliu'
 
+# Data Sources File
+
 PARTIES = ['Labor', 'Liberal', 'Greens', 'Nationals']
 
 LEADERS = ['Daniel Andrews', 'DanielAndrewsMP',
@@ -15,4 +17,4 @@ PARTYANDLEADER = {'Labor': ['Labor', 'Daniel Andrews', 'DanielAndrewsMP'],
       'Liberal': ['Liberal', 'Napthine', 'denisvnapthine'],
       'Greens': ['Greens', 'Greg Barber', 'GregMLC'],
       'Nationals': ['Nationals']
-    }
+}
