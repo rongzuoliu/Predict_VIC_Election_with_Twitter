@@ -8,8 +8,8 @@ var NP = 0;
 function showMap() {
     // Set up an original map
     L.mapbox.accessToken = 'pk.eyJ1Ijoicm9uZ3p1b2wiLCJhIjoiM09xSU1TZyJ9.yB_yO1xg4PzZ2h7LrY53Zw';
-    // Replace 'examples.map-i87786ca' with your map id: rongzuol.f5f6a9f0
-    var mapboxTiles = L.tileLayer('https://{s}.tiles.mapbox.com/v4/rongzuol.f5f6a9f0/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken, {
+    // Replace 'examples.map-i87786ca' with your map id
+    var mapboxTiles = L.tileLayer('https://{s}.tiles.mapbox.com/v4/examples.map-i87786ca/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken, {
         attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
         }
     );
