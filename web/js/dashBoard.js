@@ -1,3 +1,5 @@
+// Code reference: http://bl.ocks.org/NPashaP/96447623ef4d342ee09b
+
 function dashBoard(id, fData){
     var barColor = 'steelblue';
     function segColor(c) {
