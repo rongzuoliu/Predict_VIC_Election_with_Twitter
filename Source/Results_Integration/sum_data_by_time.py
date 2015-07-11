@@ -47,7 +47,7 @@ def try_to_count_in(doc):
 
 
 def save_to_ELECTDATASUMBYTIME(total):
-    wf_js = open('Results/ELECTDATASUMBYTIME.js', 'w')
+    wf_js = open('Predicted_Results/ELECTDATASUMBYTIME.js', 'w')
     wf_js.write('var electDataSumByTime = {\n\'type\': \'Sum By Time on Every Party \',\n\'totalCount\': \'' + str(total) +'\',\n\'timeLines\': {\n')
     i = 0
     for year, party in counts_by_dt.iteritems():

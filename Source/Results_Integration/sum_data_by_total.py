@@ -39,7 +39,7 @@ def main():
         parties_rates[party]['neu_rate'] = parties_rates[party]['total_neu'] / float(total)
         parties_rates[party]['neg_rate'] = parties_rates[party]['total_neg'] / float(total)
 
-    wf_js = open('Results/TOTALDATARATES.js', 'w')
+    wf_js = open('Predicted_Results/TOTALDATARATES.js', 'w')
     wf_js.write('var totalDataRates = {\n\'type\': \'Sum of the Total Counts and Rates for Every Party\',\n\'total count\': ' + str(total) + ',\n\'parties\': {\n')
     i = 0
     for party in parties_rates:

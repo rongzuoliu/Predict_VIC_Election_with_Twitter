@@ -41,7 +41,7 @@ def try_to_count_in(doc):
 
 
 def save_to_ELECTDATACOUNTS(total):
-    wf_js = open('Results/ELECTDATACOUNTS.js', 'w')
+    wf_js = open('Predicted_Results/ELECTDATACOUNTS.js', 'w')
     wf_py = open('ELECTDATACOUNTS.py', 'w')
     wf_js.write('var electDataCounts = {\n\'type\': \'Sum Based on Electorates \',\n\'totalCount\': \'' + str(total) +'\',\n\'counts\': {\n')
     wf_py.write('ELECTDATACOUNTS = {\n\"type\": \"Sum Based on Electorates \",\n\"totalCount\": \"' + str(total) +'\",\n\"counts\": [\n')
